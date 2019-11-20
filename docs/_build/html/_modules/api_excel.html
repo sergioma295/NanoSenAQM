@@ -1,0 +1,492 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta charset="utf-8" />
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="../_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="../_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="../_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>api_excel &#8212; MOSsensor 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MOSsensor 0.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="../search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="../index.html">Docs</a></li>
+              
+                <li><a href="index.html">Module code</a></li>
+              
+              <li>api_excel</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <h1>Source code for api_excel</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Libraries</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span><span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">xlsxwriter</span>
+
+
+<div class="viewcode-block" id="export2Excel"><a class="viewcode-back" href="../api_excel.html#api_excel.export2Excel">[docs]</a><span class="k">def</span> <span class="nf">export2Excel</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create workbook in order to save data generated.</span>
+
+<span class="sd">    :type data: str</span>
+<span class="sd">    :param data: Path where original file folder is.</span>
+
+<span class="sd">    :type path: str</span>
+<span class="sd">    :param path: Path folder generated.</span>
+
+<span class="sd">    :type name: str</span>
+<span class="sd">    :param name: Path folder output inside folder generated.</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">+</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;.xlsx&#39;</span>
+
+    <span class="c1"># Number of rows and columns in the file</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># Openning the excel file</span>
+    <span class="n">writer</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">ExcelWriter</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">workbook</span> <span class="o">=</span> <span class="n">writer</span><span class="o">.</span><span class="n">book</span>
+
+    <span class="c1"># Writing the data</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;Datos&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Close book</span>
+    <span class="n">workbook</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="saveFeatures2Excel"><a class="viewcode-back" href="../api_excel.html#api_excel.saveFeatures2Excel">[docs]</a><span class="k">def</span> <span class="nf">saveFeatures2Excel</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">path</span><span class="p">,</span><span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Storage of the characteristics in a .xlsx file with a certain format and with the name of the gas from which these\n</span>
+<span class="sd">    characteristics have been obtained.\n</span>
+
+<span class="sd">    :param data: Features to storage</span>
+<span class="sd">    :type data: List</span>
+
+<span class="sd">    :param path: Path to storage</span>
+<span class="sd">    :type path: str</span>
+
+<span class="sd">    :param name: Name of File generated</span>
+<span class="sd">    :type name: str</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">+</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;.xlsx&#39;</span> <span class="c1"># Path</span>
+
+
+    <span class="n">Id</span> <span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">response1</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">response2</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">response3</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">response4</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+
+    <span class="n">Humidity</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+
+    <span class="n">M_S1</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+    <span class="n">M_S2</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span>
+    <span class="n">M_S3</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span>
+    <span class="n">M_S4</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span>
+
+    <span class="n">V1</span>   <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span>
+    <span class="n">V2</span>   <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span>
+    <span class="n">V3</span>   <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span>
+    <span class="n">V4</span>   <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span>
+
+    <span class="n">GasConcentration</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span>
+
+    <span class="n">data_</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Ciclo&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;Respuesta_S1&#39;</span><span class="p">,</span><span class="s1">&#39;Respuesta_S2&#39;</span><span class="p">,</span><span class="s1">&#39;Respuesta_S3&#39;</span><span class="p">,</span><span class="s1">&#39;Respuesta_S4&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;Humedad&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;M1_S1&#39;</span><span class="p">,</span><span class="s1">&#39;M2_S1&#39;</span><span class="p">,</span><span class="s1">&#39;M3_S1&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;M1_S2&#39;</span><span class="p">,</span><span class="s1">&#39;M2_S2&#39;</span><span class="p">,</span><span class="s1">&#39;M3_S2&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;M1_S3&#39;</span><span class="p">,</span><span class="s1">&#39;M2_S3&#39;</span><span class="p">,</span><span class="s1">&#39;M3_S3&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;M1_S4&#39;</span><span class="p">,</span><span class="s1">&#39;M2_S4&#39;</span><span class="p">,</span><span class="s1">&#39;M3_S4&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;V1&#39;</span><span class="p">,</span> <span class="s1">&#39;V2&#39;</span><span class="p">,</span> <span class="s1">&#39;V3&#39;</span><span class="p">,</span><span class="s1">&#39;V4&#39;</span><span class="p">,</span>
+             <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)]</span>
+
+    <span class="n">data_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">index_i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Humidity</span><span class="p">)):</span>
+        <span class="n">data_</span><span class="o">.</span><span class="n">append</span><span class="p">([(</span><span class="n">index_i</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span>
+                     <span class="n">response1</span><span class="p">[</span><span class="n">index_i</span><span class="p">],</span> <span class="n">response2</span><span class="p">[</span><span class="n">index_i</span><span class="p">],</span> <span class="n">response3</span><span class="p">[</span><span class="n">index_i</span><span class="p">],</span> <span class="n">response4</span><span class="p">[</span><span class="n">index_i</span><span class="p">],</span>
+                     <span class="n">Humidity</span><span class="p">[</span><span class="n">index_i</span><span class="p">],</span>
+                     <span class="n">M_S1</span><span class="p">[</span><span class="n">index_i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">M_S1</span><span class="p">[</span><span class="n">index_i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">M_S1</span><span class="p">[</span><span class="n">index_i</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span>
+                     <span class="n">M_S2</span><span class="p">[</span><span class="n">index_i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">M_S2</span><span class="p">[</span><span class="n">index_i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">M_S2</span><span class="p">[</span><span class="n">index_i</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span>
+                     <span class="n">M_S3</span><span class="p">[</span><span class="n">index_i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">M_S3</span><span class="p">[</span><span class="n">index_i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">M_S3</span><span class="p">[</span><span class="n">index_i</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span>
+                     <span class="n">M_S4</span><span class="p">[</span><span class="n">index_i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">M_S4</span><span class="p">[</span><span class="n">index_i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">M_S4</span><span class="p">[</span><span class="n">index_i</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span>
+                     <span class="n">V1</span><span class="p">[</span><span class="n">index_i</span><span class="p">],</span> <span class="n">V2</span><span class="p">[</span><span class="n">index_i</span><span class="p">],</span> <span class="n">V3</span><span class="p">[</span><span class="n">index_i</span><span class="p">],</span> <span class="n">V4</span><span class="p">[</span><span class="n">index_i</span><span class="p">],</span><span class="n">GasConcentration</span><span class="p">[</span><span class="n">index_i</span><span class="p">]])</span>
+
+    <span class="c1"># We create a woorkbook in a folder</span>
+    <span class="n">workbook</span> <span class="o">=</span> <span class="n">xlsxwriter</span><span class="o">.</span><span class="n">Workbook</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">worksheet</span> <span class="o">=</span> <span class="n">workbook</span><span class="o">.</span><span class="n">add_worksheet</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Caracteristicas&#39;</span><span class="p">)</span>
+
+
+    <span class="k">for</span> <span class="n">row</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data_</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data_</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+            <span class="n">worksheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">item</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+
+
+    <span class="n">workbook</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="File"><a class="viewcode-back" href="../api_excel.html#api_excel.File">[docs]</a><span class="k">class</span> <span class="nc">File</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a File type object that allows you to read the data from the excel file you want to process.\n</span>
+
+<span class="sd">    :param name: Name Output File</span>
+<span class="sd">    :type name: str</span>
+
+<span class="sd">    :param type: Measure Line Type</span>
+<span class="sd">    :type type: str</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span>         <span class="o">=</span>  <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span>         <span class="o">=</span>  <span class="nb">type</span>
+
+<div class="viewcode-block" id="File.createDirectories"><a class="viewcode-back" href="../api_excel.html#api_excel.File.createDirectories">[docs]</a>    <span class="k">def</span> <span class="nf">createDirectories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">           Create directories method use to create folder output.</span>
+
+<span class="sd">           :type path_origen: str</span>
+<span class="sd">           :param path_origen: Path where original file folder is.</span>
+
+<span class="sd">           :type path_folder: str</span>
+<span class="sd">           :param path_folder: Path folder generated.</span>
+
+<span class="sd">           :type path_output: str</span>
+<span class="sd">           :param path_output: Path folder output inside folder generated.</span>
+
+<span class="sd">           :type path_excel: str</span>
+<span class="sd">           :param path_excel: Path excel files output inside folder generated.</span>
+
+<span class="sd">           :type path_images: str</span>
+<span class="sd">           :param path_images: Path imgs files output inside folder generated.</span>
+
+<span class="sd">           &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path_origen</span>  <span class="o">=</span>  <span class="s1">&#39;Files/&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path_destino</span> <span class="o">=</span>  <span class="s1">&#39;Data/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path_output</span>  <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">path_destino</span> <span class="o">+</span> <span class="s1">&#39;/Datos_Procesados/&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path_excel</span>   <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">path_destino</span> <span class="o">+</span> <span class="s1">&#39;/excel/&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path_images</span>  <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">path_destino</span> <span class="o">+</span> <span class="s1">&#39;/Imgs/&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slopes</span>       <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">path_images</span>  <span class="o">+</span> <span class="s1">&#39;Slopes/&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slopes_s1</span>    <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">slopes</span> <span class="o">+</span> <span class="s1">&#39;S1/&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slopes_s2</span>    <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">slopes</span> <span class="o">+</span> <span class="s1">&#39;S2/&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slopes_s3</span>    <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">slopes</span> <span class="o">+</span> <span class="s1">&#39;S3/&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slopes_s4</span>    <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">slopes</span> <span class="o">+</span> <span class="s1">&#39;S4/&#39;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+
+            <span class="c1"># We create the general data directory</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_destino</span><span class="p">)</span>
+
+            <span class="c1"># Creating the directory where the output is stored</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_output</span><span class="p">)</span>
+
+            <span class="c1"># Creation of the directory where the excel files are stored</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_excel</span><span class="p">)</span>
+
+            <span class="c1"># Creation of the image directory.</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_images</span><span class="p">)</span>
+
+            <span class="c1"># Creation of the image directory with folder to store the slopes of each cycle</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slopes</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slopes_s1</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slopes_s2</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slopes_s3</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slopes_s4</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_origen</span><span class="p">)):</span>
+                <span class="k">try</span><span class="p">:</span>
+
+                    <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_origen</span><span class="p">):</span>
+                        <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="s1">&#39;.xlsx&#39;</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+                                <span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">file</span><span class="p">))</span>
+
+                    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[INFO] File: &quot;</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[INFO] Error moving file&quot;</span><span class="p">)</span>
+
+                <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_excel</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">path_file</span> <span class="o">=</span> <span class="n">f</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[INFO] File has been copied to &#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_excel</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[INFO] Error. There is no file in the folder Files/&quot;</span><span class="p">)</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[INFO] Directories created correctly.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------------------------------------------------------------------------------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+        <span class="k">except</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[INFO] Error. The directory already exists, use another filename.&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------------------------------------------------------------------------------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="File.readData"><a class="viewcode-back" href="../api_excel.html#api_excel.File.readData">[docs]</a>    <span class="k">def</span> <span class="nf">readData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reading of the data to be processed and stored in a .xlsx file with the function of the class File &lt;&lt;wiinoseLine&gt;&gt;\n</span>
+<span class="sd">        if the type entered by the user is 1 and &lt;&lt;ozoneLine&gt;&gt; if the type entered by the user is. The data is stored in\n</span>
+<span class="sd">        a variable of class &quot;data&quot;.If a suitable line type (1 or 2) is not received, the execution of the program ends \n</span>
+<span class="sd">        and informs the user of the error.\n</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">==</span><span class="s1">&#39;1&#39;</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[INFO] Linea: Wiinose&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">wiinoseLine</span><span class="p">()</span>
+                <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">elif</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">==</span><span class="s1">&#39;2&#39;</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[INFO] Linea: Ozono&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[INFO] Aún no implementado&quot;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[INFO] Error. Incorrectly selected line&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------------------------------------------------------------------------------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="File.wiinoseLine"><a class="viewcode-back" href="../api_excel.html#api_excel.File.wiinoseLine">[docs]</a>    <span class="k">def</span> <span class="nf">wiinoseLine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get data from wiinose line and save that to &quot;data&quot; variable class File by means of &lt;&lt;export2Excel&gt;&gt; function.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># We extract the data from the file that generates the wiinose line.</span>
+            <span class="n">name_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">excel</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">ExcelFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_file</span><span class="p">)</span>
+            <span class="n">main_variables</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">excel</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;resistencias&#39;</span><span class="p">)</span>
+            <span class="n">parameters</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">excel</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;parametros&#39;</span><span class="p">)</span>
+            <span class="c1"># We define a list to store the names of the columns of the file generated in the Wiinose</span>
+            <span class="n">name_main_variables</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">name_parametros_variables</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="c1"># Time</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="n">name_parametros_variables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+            <span class="c1"># Flow</span>
+            <span class="n">flow</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="n">name_parametros_variables</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+            <span class="c1"># Tamb</span>
+            <span class="n">tamb</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="n">name_parametros_variables</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+            <span class="c1"># Humidity</span>
+            <span class="n">humidity_</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="n">name_parametros_variables</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+            <span class="n">humidity</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="c1"># Time Variables in seconds and minutes.</span>
+            <span class="n">timeMin</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="n">name_parametros_variables</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span>
+            <span class="n">timeSec</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="c1"># Getting Time</span>
+            <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">timeMin</span><span class="p">)):</span>
+                <span class="n">timeSec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timeMin</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+                <span class="n">humidity</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">humidity_</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+            <span class="c1"># Getting Main varibles</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">main_variables</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="n">name_main_variables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+            <span class="c1"># Resistances</span>
+            <span class="n">resistances</span> <span class="o">=</span> <span class="p">[</span><span class="n">main_variables</span><span class="p">[</span><span class="n">name_main_variables</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">main_variables</span><span class="p">[</span><span class="n">name_main_variables</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+                            <span class="n">main_variables</span><span class="p">[</span><span class="n">name_main_variables</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span> <span class="n">main_variables</span><span class="p">[</span><span class="n">name_main_variables</span><span class="p">[</span><span class="mi">3</span><span class="p">]]]</span>
+            <span class="c1"># Heater Voltage</span>
+            <span class="n">voltages</span> <span class="o">=</span> <span class="p">[</span><span class="n">main_variables</span><span class="p">[</span><span class="n">name_main_variables</span><span class="p">[</span><span class="mi">10</span><span class="p">]],</span> <span class="n">main_variables</span><span class="p">[</span><span class="n">name_main_variables</span><span class="p">[</span><span class="mi">11</span><span class="p">]],</span>
+                        <span class="n">main_variables</span><span class="p">[</span><span class="n">name_main_variables</span><span class="p">[</span><span class="mi">12</span><span class="p">]],</span> <span class="n">main_variables</span><span class="p">[</span><span class="n">name_main_variables</span><span class="p">[</span><span class="mi">13</span><span class="p">]]]</span>
+            <span class="c1"># Gases</span>
+            <span class="n">gases</span> <span class="o">=</span> <span class="p">[</span><span class="n">main_variables</span><span class="p">[</span><span class="n">name_main_variables</span><span class="p">[</span><span class="mi">4</span><span class="p">]],</span> <span class="n">main_variables</span><span class="p">[</span><span class="n">name_main_variables</span><span class="p">[</span><span class="mi">5</span><span class="p">]]]</span>
+            <span class="c1"># Number of measure</span>
+            <span class="n">measureNum</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">timeMin</span><span class="p">)):</span>
+                <span class="n">measureNum</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="c1"># Save Data like DataFrame</span>
+            <span class="n">Data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Id&#39;</span><span class="p">:</span> <span class="n">measureNum</span><span class="p">,</span>
+                     <span class="s1">&#39;Tiempo_minutos&#39;</span><span class="p">:</span> <span class="n">timeMin</span><span class="p">,</span>
+                     <span class="s1">&#39;Tiempo_segundos&#39;</span><span class="p">:</span> <span class="n">timeSec</span><span class="p">,</span>
+                     <span class="s1">&#39;S1&#39;</span><span class="p">:</span> <span class="n">resistances</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                     <span class="s1">&#39;S2&#39;</span><span class="p">:</span> <span class="n">resistances</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                     <span class="s1">&#39;S3&#39;</span><span class="p">:</span> <span class="n">resistances</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                     <span class="s1">&#39;S4&#39;</span><span class="p">:</span> <span class="n">resistances</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+                     <span class="n">name_main_variables</span><span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">gases</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                     <span class="n">name_main_variables</span><span class="p">[</span><span class="mi">5</span><span class="p">]:</span> <span class="n">gases</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                     <span class="n">name_parametros_variables</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">flow</span><span class="p">,</span>
+                     <span class="s1">&#39;Tamb&#39;</span><span class="p">:</span> <span class="n">tamb</span><span class="p">,</span>
+                     <span class="s1">&#39;Humidity&#39;</span><span class="p">:</span> <span class="n">humidity</span><span class="p">,</span>
+                     <span class="n">name_main_variables</span><span class="p">[</span><span class="mi">10</span><span class="p">]:</span> <span class="n">voltages</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                     <span class="n">name_main_variables</span><span class="p">[</span><span class="mi">11</span><span class="p">]:</span> <span class="n">voltages</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                     <span class="n">name_main_variables</span><span class="p">[</span><span class="mi">12</span><span class="p">]:</span> <span class="n">voltages</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                     <span class="n">name_main_variables</span><span class="p">[</span><span class="mi">13</span><span class="p">]:</span> <span class="n">voltages</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+                     <span class="p">}</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">Data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Id&#39;</span><span class="p">,</span> <span class="s1">&#39;Tiempo_minutos&#39;</span><span class="p">,</span> <span class="s1">&#39;Tiempo_segundos&#39;</span><span class="p">,</span>
+                                                <span class="s1">&#39;S1&#39;</span><span class="p">,</span> <span class="s1">&#39;S2&#39;</span><span class="p">,</span> <span class="s1">&#39;S3&#39;</span><span class="p">,</span> <span class="s1">&#39;S4&#39;</span><span class="p">,</span>
+                                                <span class="n">name_main_variables</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">name_main_variables</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span>
+                                                <span class="n">name_parametros_variables</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Tamb&#39;</span><span class="p">,</span> <span class="s1">&#39;Humidity&#39;</span><span class="p">,</span>
+                                                <span class="n">name_main_variables</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">name_main_variables</span><span class="p">[</span><span class="mi">11</span><span class="p">],</span> <span class="n">name_main_variables</span><span class="p">[</span><span class="mi">12</span><span class="p">],</span> <span class="n">name_main_variables</span><span class="p">[</span><span class="mi">13</span><span class="p">]])</span>
+            <span class="c1"># Save File variables.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gas1</span> <span class="o">=</span> <span class="n">name_main_variables</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gas2</span> <span class="o">=</span> <span class="n">name_main_variables</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+            <span class="c1"># We export the data to excel</span>
+            <span class="n">export2Excel</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_output</span><span class="p">,</span> <span class="n">name_folder</span><span class="p">)</span>
+
+
+        <span class="k">except</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[INFO] Error en &quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_file</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="File.getData"><a class="viewcode-back" href="../api_excel.html#api_excel.File.getData">[docs]</a>    <span class="k">def</span> <span class="nf">getData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return data read from Excel File.\n</span>
+<span class="sd">        :return: data</span>
+<span class="sd">        :rtype:  DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span></div>
+
+<div class="viewcode-block" id="File.getPathOrigen"><a class="viewcode-back" href="../api_excel.html#api_excel.File.getPathOrigen">[docs]</a>    <span class="k">def</span> <span class="nf">getPathOrigen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return Path Origen File\n</span>
+<span class="sd">        :return: path_origen</span>
+<span class="sd">        :rtype:  str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_origen</span></div>
+
+<div class="viewcode-block" id="File.getPathFile"><a class="viewcode-back" href="../api_excel.html#api_excel.File.getPathFile">[docs]</a>    <span class="k">def</span> <span class="nf">getPathFile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return Path Output File\n</span>
+<span class="sd">        :return: path_destino</span>
+<span class="sd">        :rtype:  str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_destino</span></div>
+
+<div class="viewcode-block" id="File.getPathOutput"><a class="viewcode-back" href="../api_excel.html#api_excel.File.getPathOutput">[docs]</a>    <span class="k">def</span> <span class="nf">getPathOutput</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return Path Output File\n</span>
+<span class="sd">        :return: path_output</span>
+<span class="sd">        :rtype:  str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_output</span></div>
+
+<div class="viewcode-block" id="File.getPathExcel"><a class="viewcode-back" href="../api_excel.html#api_excel.File.getPathExcel">[docs]</a>    <span class="k">def</span> <span class="nf">getPathExcel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return Excel Path to save File\n</span>
+<span class="sd">        :return: path_excel</span>
+<span class="sd">        :rtype:  str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_excel</span></div>
+
+<div class="viewcode-block" id="File.getPathImages"><a class="viewcode-back" href="../api_excel.html#api_excel.File.getPathImages">[docs]</a>    <span class="k">def</span> <span class="nf">getPathImages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return Excel Path to save Imgs\n</span>
+<span class="sd">        :return: path_images</span>
+<span class="sd">        :rtype:  str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_images</span></div>
+
+<div class="viewcode-block" id="File.getPathSlopes"><a class="viewcode-back" href="../api_excel.html#api_excel.File.getPathSlopes">[docs]</a>    <span class="k">def</span> <span class="nf">getPathSlopes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return Excel Path to save Imgs Slopes\n</span>
+<span class="sd">        :return: self.slopes, [self.slopes_s1, self.slopes_s2, self.slopes_s3, self.slopes_s4]</span>
+<span class="sd">        :rtype:  str, [str, str,str,str]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">slopes</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">slopes_s1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">slopes_s2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">slopes_s3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">slopes_s4</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="File.getIdGases"><a class="viewcode-back" href="../api_excel.html#api_excel.File.getIdGases">[docs]</a>    <span class="k">def</span> <span class="nf">getIdGases</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return Gases names\n</span>
+<span class="sd">        :return: [Gas Name 1, Gas Name 2]</span>
+<span class="sd">        :rtype:  [str, str]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">gas1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gas2</span><span class="p">]</span></div></div>
+
+
+
+</pre></div>
+
+          </div>
+            
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MOSsensor 0.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="../_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 2019, Sergio Masa. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>
