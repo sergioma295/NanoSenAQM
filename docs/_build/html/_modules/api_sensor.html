@@ -1,0 +1,1070 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta charset="utf-8" />
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="../_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="../_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="../_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>api_sensor &#8212; MOSsensor 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MOSsensor 0.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="../search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="../index.html">Docs</a></li>
+              
+                <li><a href="index.html">Module code</a></li>
+              
+              <li>api_sensor</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <h1>Source code for api_sensor</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="k">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">stats</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="Measure"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure">[docs]</a><span class="k">class</span> <span class="nc">Measure</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot; Measure class. We use this as a public class example class. It has the necessary methods to process the</span>
+<span class="sd">    previously created file</span>
+
+<span class="sd">    *** Note: You never call this class before create a file object.***</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span>  <span class="n">file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">getData</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Measure.readSampleTime"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.readSampleTime">[docs]</a>    <span class="k">def</span> <span class="nf">readSampleTime</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">           Method to read the sample time in the measure.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">t_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Tiempo_segundos&#39;</span><span class="p">]</span>
+
+        <span class="c1"># Obtaining the sample time and storing it in a list</span>
+        <span class="n">sample_time</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t_s</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">s_t</span> <span class="o">=</span> <span class="n">t_s</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">t_s</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+            <span class="n">sample_time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s_t</span><span class="p">)</span>
+
+        <span class="c1"># Check that the sample time has the same length -1 as the time series</span>
+        <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sample_time</span><span class="p">)</span><span class="o">==</span><span class="nb">len</span><span class="p">(</span><span class="n">t_s</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[INFO] Error. Sample Time.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sample_time</span> <span class="o">=</span> <span class="n">sample_time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sample_time_mean</span> <span class="o">=</span> <span class="n">getStatistics</span><span class="p">(</span><span class="n">sample_time</span><span class="p">,</span><span class="s1">&#39;Sample Time&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Measure.getSampleTime"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.getSampleTime">[docs]</a>    <span class="k">def</span> <span class="nf">getSampleTime</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to get the sample time processed\n</span>
+<span class="sd">        :return: sample_time</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample_time</span></div>
+
+<div class="viewcode-block" id="Measure.getSampleTimeMean"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.getSampleTimeMean">[docs]</a>    <span class="k">def</span> <span class="nf">getSampleTimeMean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to get the sample time mean\n</span>
+<span class="sd">        :return: sample_time_mean</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample_time_mean</span></div>
+
+<div class="viewcode-block" id="Measure.readGasesCycles"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.readGasesCycles">[docs]</a>    <span class="k">def</span> <span class="nf">readGasesCycles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to read the different gas cyles in order to obtain the index where concentration changes.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">gasesId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">getIdGases</span><span class="p">()</span>
+        <span class="n">gas1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">gasesId</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">gas2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">gasesId</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="c1"># Creation of two types of variables to store the indices and the number of cycles of each gas</span>
+        <span class="n">num_cycle_gas1</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">num_cycle_gas2</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">gas1_index</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">gas2_index</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gas1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">gas1</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">gas1</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">gas1</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])):</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">gas1_index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+                <span class="n">num_cycle_gas1</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">gas2</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">gas2</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">gas2</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])):</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">gas2_index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+                <span class="n">num_cycle_gas2</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># Add the last leg.</span>
+        <span class="n">gas1_index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gas1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">gas2_index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gas2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Number of measurement cycles.</span>
+        <span class="n">num_cycle_gas1</span> <span class="o">/=</span> <span class="mi">2</span>
+        <span class="n">num_cycle_gas2</span> <span class="o">/=</span> <span class="mi">2</span>
+
+        <span class="c1"># Save as variable class.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_cycle_gas1</span> <span class="o">=</span> <span class="n">num_cycle_gas1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_cycle_gas2</span> <span class="o">=</span> <span class="n">num_cycle_gas2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gas1_index</span> <span class="o">=</span> <span class="n">gas1_index</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gas2_index</span> <span class="o">=</span> <span class="n">gas2_index</span></div>
+
+<div class="viewcode-block" id="Measure.getGasesCycles"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.getGasesCycles">[docs]</a>    <span class="k">def</span> <span class="nf">getGasesCycles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to get the gas cycle variables\n</span>
+<span class="sd">        :return: number_of_cycles_gas1, number_of_cycles_gas2, gas1_index, gas2_index</span>
+<span class="sd">        :rtype: int, int, list, list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_cycle_gas1</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cycle_gas2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gas1_index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gas2_index</span></div>
+
+<div class="viewcode-block" id="Measure.getNumCycleGas"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.getNumCycleGas">[docs]</a>    <span class="k">def</span> <span class="nf">getNumCycleGas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to get the gas cycle number\n</span>
+<span class="sd">        :return: number_of_cycles_gas1, number_of_cycles_gas2</span>
+<span class="sd">        :rtype: int, int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_cycle_gas1</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">num_cycle_gas2</span></div>
+
+<div class="viewcode-block" id="Measure.getIndexCycleGas"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.getIndexCycleGas">[docs]</a>    <span class="k">def</span> <span class="nf">getIndexCycleGas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to get the gas cycle index\n</span>
+<span class="sd">        :return: gas1_index, gas2_index</span>
+<span class="sd">        :rtype: list, list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">gas1_index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gas2_index</span></div>
+
+<div class="viewcode-block" id="Measure.getGases"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.getGases">[docs]</a>    <span class="k">def</span> <span class="nf">getGases</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to get the gases name\n</span>
+<span class="sd">        :return: gas1_name, gas2_name</span>
+<span class="sd">        :rtype: str, str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">gasId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">getIdGases</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">gasId</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">gasId</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span></div>
+
+<div class="viewcode-block" id="Measure.getSimpleGas"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.getSimpleGas">[docs]</a>    <span class="k">def</span> <span class="nf">getSimpleGas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gasId</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to get a gas name\n</span>
+<span class="sd">        :return: gasX_name</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">gasId</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Measure.getSensor"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.getSensor">[docs]</a>    <span class="k">def</span> <span class="nf">getSensor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to get the sensor values\n</span>
+<span class="sd">        :return: [s1,s2,s3,s4]</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">s1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;S1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">s2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;S2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">s3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;S3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">s4</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;S4&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">s3</span><span class="p">,</span> <span class="n">s4</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Measure.getTime"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.getTime">[docs]</a>    <span class="k">def</span> <span class="nf">getTime</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to get the time variable of measure\n</span>
+<span class="sd">        :return: time_(seconds)</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">t_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Tiempo_segundos&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">t_s</span></div>
+
+<div class="viewcode-block" id="Measure.getHumidity"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.getHumidity">[docs]</a>    <span class="k">def</span> <span class="nf">getHumidity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to get the humidity variable of measure\n</span>
+<span class="sd">        :return: humidity(%)</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">humidity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Humidity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">humidity</span></div>
+
+<div class="viewcode-block" id="Measure.getVoltageHeaters"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.getVoltageHeaters">[docs]</a>    <span class="k">def</span> <span class="nf">getVoltageHeaters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to get the voltage variable of measure\n</span>
+<span class="sd">        :return: voltage(mV)</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">V1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;V1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">V2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;V2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">V3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;V3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">V4</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;V4&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">V1</span><span class="p">,</span><span class="n">V2</span><span class="p">,</span><span class="n">V3</span><span class="p">,</span><span class="n">V4</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Measure.readCyclesData"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.readCyclesData">[docs]</a>    <span class="k">def</span> <span class="nf">readCyclesData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">Gas</span><span class="p">,</span> <span class="n">Index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to read data of every Cycle getting variables list with a number of elements equal to number of cycle gas\n</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Sensor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSensor</span><span class="p">()</span>
+        <span class="c1"># Variable to store the indices of each cycle</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Getting Time</span>
+        <span class="n">t_s_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTime</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">t_s</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Temporary variables to store the resistance value of the sensors.</span>
+        <span class="n">s1</span> <span class="o">=</span> <span class="n">Sensor</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">s2</span> <span class="o">=</span> <span class="n">Sensor</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">s3</span> <span class="o">=</span> <span class="n">Sensor</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">s4</span> <span class="o">=</span> <span class="n">Sensor</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+
+        <span class="c1"># Method Output Variables</span>
+        <span class="n">data_s1</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">data_s2</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">data_s3</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">data_s4</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">data_gas</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># We scroll the list with the indexes that indicate a change of concentration</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Index</span><span class="p">)):</span>
+            <span class="c1"># We check if the index is odd or its value is greater than the length of the number of concentration changes</span>
+            <span class="c1"># minus three. Otherwise, we add to the vector the resistances from this index to this index + 3.</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">index</span> <span class="o">&gt;</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Index</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span><span class="p">):</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Calculation of indexes for the lower limit and the upper limit.</span>
+                <span class="n">lim_inf</span> <span class="o">=</span> <span class="n">Index</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+                <span class="n">lim_sup</span> <span class="o">=</span> <span class="n">Index</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span>
+
+                <span class="c1"># Obtaining gas concentration</span>
+                <span class="n">gas</span> <span class="o">=</span> <span class="n">Gas</span><span class="p">[</span><span class="n">lim_inf</span><span class="p">:</span><span class="n">lim_sup</span><span class="p">]</span>
+
+                <span class="c1"># Variable that stores the indexes of each cycle</span>
+                <span class="n">samples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Index</span><span class="p">[</span><span class="n">index</span><span class="p">:(</span><span class="n">index</span> <span class="o">+</span> <span class="mi">4</span><span class="p">)])</span>
+
+                <span class="c1"># Obtaining the values between the limits for each sensor.</span>
+                <span class="c1"># SENSOR 1</span>
+                <span class="n">s1_</span> <span class="o">=</span> <span class="n">s1</span><span class="p">[</span><span class="n">lim_inf</span><span class="p">:</span><span class="n">lim_sup</span><span class="p">]</span>
+
+                <span class="c1"># SENSOR 2</span>
+                <span class="n">s2_</span> <span class="o">=</span> <span class="n">s2</span><span class="p">[</span><span class="n">lim_inf</span><span class="p">:</span><span class="n">lim_sup</span><span class="p">]</span>
+
+                <span class="c1"># SENSOR 3</span>
+                <span class="n">s3_</span> <span class="o">=</span> <span class="n">s3</span><span class="p">[</span><span class="n">lim_inf</span><span class="p">:</span><span class="n">lim_sup</span><span class="p">]</span>
+
+                <span class="c1"># SENSOR 4</span>
+                <span class="n">s4_</span> <span class="o">=</span> <span class="n">s4</span><span class="p">[</span><span class="n">lim_inf</span><span class="p">:</span><span class="n">lim_sup</span><span class="p">]</span>
+
+                <span class="c1"># Time</span>
+                <span class="n">t_s_</span> <span class="o">=</span> <span class="n">t_s_value</span><span class="p">[</span><span class="n">lim_inf</span><span class="p">:</span><span class="n">lim_sup</span><span class="p">]</span>
+
+                <span class="n">data_s1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s1_</span><span class="p">)</span>
+                <span class="n">data_s2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s2_</span><span class="p">)</span>
+                <span class="n">data_s3</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s3_</span><span class="p">)</span>
+                <span class="n">data_s4</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s4_</span><span class="p">)</span>
+                <span class="n">data_gas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gas</span><span class="p">)</span>
+                <span class="n">t_s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t_s_</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataS1</span>  <span class="o">=</span> <span class="n">data_s1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataS2</span>  <span class="o">=</span> <span class="n">data_s2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataS3</span>  <span class="o">=</span> <span class="n">data_s3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataS4</span>  <span class="o">=</span> <span class="n">data_s4</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataGas</span> <span class="o">=</span> <span class="n">data_gas</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">t_s_steps</span> <span class="o">=</span> <span class="n">t_s</span></div>
+
+<div class="viewcode-block" id="Measure.getTsSteps"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.getTsSteps">[docs]</a>    <span class="k">def</span> <span class="nf">getTsSteps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to return t_s list[cycle1, cycle2,...,cyclen]</span>
+<span class="sd">        :return: t_s_steps</span>
+<span class="sd">        :rtype: list[cycle_i, ..., cycle_n]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_s_steps</span></div>
+
+<div class="viewcode-block" id="Measure.getCyclesData"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.getCyclesData">[docs]</a>    <span class="k">def</span> <span class="nf">getCyclesData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataS1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataS2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataS3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataS4</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataGas</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span></div>
+
+<div class="viewcode-block" id="Measure.readSamplesCycles"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.readSamplesCycles">[docs]</a>    <span class="k">def</span> <span class="nf">readSamplesCycles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to read data in every cycle generating an output list where\n</span>
+<span class="sd">        1. Element 0 are sensor values gas 1.</span>
+<span class="sd">        2. Element 1 are gas 1 values.</span>
+<span class="sd">        3. Element 2 are sensor values gas 2.</span>
+<span class="sd">        4. Element 3 are gas 2 values.\n</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># The variables NO2 and CO are converted to List.</span>
+        <span class="n">gases</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getGases</span><span class="p">()</span>
+        <span class="n">gas1</span> <span class="o">=</span> <span class="n">gases</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">gas2</span> <span class="o">=</span> <span class="n">gases</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="c1"># Getting Time</span>
+        <span class="c1"># t_s = self.getTime()</span>
+        <span class="c1"># We get the indices</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getIndexCycleGas</span><span class="p">()</span>
+        <span class="n">index1</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">index2</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># Variables for storing gas data</span>
+        <span class="n">GAS1</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">GAS2</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># A cycle contains all points from the Pt.A - Pt.D</span>
+
+        <span class="c1">#                                       ----------------</span>
+        <span class="c1">#                                       |              |</span>
+        <span class="c1">#                                       |              |</span>
+        <span class="c1">#                           ------------|              |----------</span>
+        <span class="c1">#                           Pt.A        Pt.B          Pt.C       Pt.D</span>
+
+        <span class="c1"># If the length of variable no2_index or co_index &gt; 2, there are cycles. In cc there are NO cycles and this variable</span>
+        <span class="c1"># it will only have two occupied positions, the initial and final value of that experiment.</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">index1</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">readCyclesData</span><span class="p">(</span><span class="n">Gas</span><span class="o">=</span><span class="n">gas1</span><span class="p">,</span><span class="n">Index</span><span class="o">=</span><span class="n">index1</span><span class="p">)</span>
+            <span class="n">S1_GAS1</span><span class="p">,</span> <span class="n">S2_GAS1</span><span class="p">,</span> <span class="n">S3_GAS1</span><span class="p">,</span> <span class="n">S4_GAS1</span><span class="p">,</span> <span class="n">GAS1</span><span class="p">,</span> <span class="n">GAS1_samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getCyclesData</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">index2</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">readCyclesData</span><span class="p">(</span><span class="n">Gas</span><span class="o">=</span><span class="n">gas2</span><span class="p">,</span><span class="n">Index</span><span class="o">=</span><span class="n">index2</span><span class="p">)</span>
+            <span class="n">S1_GAS2</span><span class="p">,</span> <span class="n">S2_GAS2</span><span class="p">,</span> <span class="n">S3_GAS2</span><span class="p">,</span> <span class="n">S4_GAS2</span><span class="p">,</span> <span class="n">GAS2</span><span class="p">,</span> <span class="n">GAS2_samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getCyclesData</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">GAS1</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">GAS2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Grouping of sensor and gas data</span>
+            <span class="n">data_s1</span> <span class="o">=</span> <span class="p">[</span><span class="n">S1_GAS1</span><span class="p">,</span> <span class="n">GAS1</span><span class="p">,</span> <span class="n">S1_GAS2</span><span class="p">,</span> <span class="n">GAS2</span><span class="p">]</span>
+            <span class="n">data_s2</span> <span class="o">=</span> <span class="p">[</span><span class="n">S2_GAS1</span><span class="p">,</span> <span class="n">GAS1</span><span class="p">,</span> <span class="n">S2_GAS2</span><span class="p">,</span> <span class="n">GAS2</span><span class="p">]</span>
+            <span class="n">data_s3</span> <span class="o">=</span> <span class="p">[</span><span class="n">S3_GAS1</span><span class="p">,</span> <span class="n">GAS1</span><span class="p">,</span> <span class="n">S3_GAS2</span><span class="p">,</span> <span class="n">GAS2</span><span class="p">]</span>
+            <span class="n">data_s4</span> <span class="o">=</span> <span class="p">[</span><span class="n">S4_GAS1</span><span class="p">,</span> <span class="n">GAS1</span><span class="p">,</span> <span class="n">S4_GAS2</span><span class="p">,</span> <span class="n">GAS2</span><span class="p">]</span>
+
+        <span class="k">elif</span> <span class="p">(</span><span class="n">GAS1</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="c1"># Grouping of sensor and gas data</span>
+            <span class="c1"># Copy and initialize to 0 the output always maintain the same structure</span>
+            <span class="n">GAS2</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">GAS1</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">GAS1</span><span class="p">))]</span>
+
+            <span class="n">S1_GAS2</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">S1_GAS1</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">S1_GAS1</span><span class="p">))]</span>
+            <span class="n">S2_GAS2</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">S2_GAS1</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">S2_GAS1</span><span class="p">))]</span>
+            <span class="n">S3_GAS2</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">S3_GAS1</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">S3_GAS1</span><span class="p">))]</span>
+            <span class="n">S4_GAS2</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">S4_GAS1</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">S4_GAS1</span><span class="p">))]</span>
+
+            <span class="n">data_s1</span> <span class="o">=</span> <span class="p">[</span><span class="n">S1_GAS1</span><span class="p">,</span> <span class="n">GAS1</span><span class="p">,</span> <span class="n">S1_GAS2</span><span class="p">,</span> <span class="n">GAS2</span><span class="p">]</span>
+            <span class="n">data_s2</span> <span class="o">=</span> <span class="p">[</span><span class="n">S2_GAS1</span><span class="p">,</span> <span class="n">GAS1</span><span class="p">,</span> <span class="n">S2_GAS2</span><span class="p">,</span> <span class="n">GAS2</span><span class="p">]</span>
+            <span class="n">data_s3</span> <span class="o">=</span> <span class="p">[</span><span class="n">S3_GAS1</span><span class="p">,</span> <span class="n">GAS1</span><span class="p">,</span> <span class="n">S3_GAS2</span><span class="p">,</span> <span class="n">GAS2</span><span class="p">]</span>
+            <span class="n">data_s4</span> <span class="o">=</span> <span class="p">[</span><span class="n">S4_GAS1</span><span class="p">,</span> <span class="n">GAS1</span><span class="p">,</span> <span class="n">S4_GAS2</span><span class="p">,</span> <span class="n">GAS2</span><span class="p">]</span>
+
+            <span class="c1"># We copy and initialize to 0 the value of GAS2_samples so that the output always maintains the same structure.</span>
+            <span class="n">GAS2_samples</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">GAS1_samples</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">GAS1_samples</span><span class="p">))]</span>
+
+
+        <span class="k">elif</span> <span class="p">(</span><span class="n">GAS2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="c1"># Grouping of sensor and gas data</span>
+            <span class="c1"># Copy and initialize to 0 the output always maintain the same structure</span>
+            <span class="n">GAS1</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">GAS2</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">GAS2</span><span class="p">))]</span>
+
+            <span class="n">S1_GAS1</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">S1_GAS2</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">S1_GAS2</span><span class="p">))]</span>
+            <span class="n">S2_GAS1</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">S2_GAS2</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">S2_GAS2</span><span class="p">))]</span>
+            <span class="n">S3_GAS1</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">S3_GAS2</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">S3_GAS2</span><span class="p">))]</span>
+            <span class="n">S4_GAS1</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">S4_GAS2</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">S4_GAS2</span><span class="p">))]</span>
+
+            <span class="n">data_s1</span> <span class="o">=</span> <span class="p">[</span><span class="n">S1_GAS1</span><span class="p">,</span> <span class="n">GAS1</span><span class="p">,</span> <span class="n">S1_GAS2</span><span class="p">,</span> <span class="n">GAS2</span><span class="p">]</span>
+            <span class="n">data_s2</span> <span class="o">=</span> <span class="p">[</span><span class="n">S2_GAS1</span><span class="p">,</span> <span class="n">GAS1</span><span class="p">,</span> <span class="n">S2_GAS2</span><span class="p">,</span> <span class="n">GAS2</span><span class="p">]</span>
+            <span class="n">data_s3</span> <span class="o">=</span> <span class="p">[</span><span class="n">S3_GAS1</span><span class="p">,</span> <span class="n">GAS1</span><span class="p">,</span> <span class="n">S3_GAS2</span><span class="p">,</span> <span class="n">GAS2</span><span class="p">]</span>
+            <span class="n">data_s4</span> <span class="o">=</span> <span class="p">[</span><span class="n">S4_GAS1</span><span class="p">,</span> <span class="n">GAS1</span><span class="p">,</span> <span class="n">S4_GAS2</span><span class="p">,</span> <span class="n">GAS2</span><span class="p">]</span>
+
+            <span class="c1"># We copy and initialize to 0 the value of GAS2_samples so that the output always maintains the same structure.</span>
+            <span class="n">GAS1_samples</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">GAS2_samples</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">GAS2_samples</span><span class="p">))]</span>
+
+        <span class="n">samples</span> <span class="o">=</span> <span class="n">GAS1_samples</span><span class="p">,</span> <span class="n">GAS2_samples</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_s1</span> <span class="o">=</span> <span class="n">data_s1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_s2</span> <span class="o">=</span> <span class="n">data_s2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_s3</span> <span class="o">=</span> <span class="n">data_s3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_s4</span> <span class="o">=</span> <span class="n">data_s4</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span></div>
+
+<div class="viewcode-block" id="Measure.getSamplesCycles"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.getSamplesCycles">[docs]</a>    <span class="k">def</span> <span class="nf">getSamplesCycles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">gasId</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        :param gasId: Id to return data.\n</span>
+<span class="sd">        If gasId=1 return gas1 data.\n</span>
+<span class="sd">        If gasId=2 return gas2 data.\n</span>
+<span class="sd">        If gasId=3 return gas1 and gas2 data.\n</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">gasId</span><span class="o">==</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">a1</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_s1</span><span class="p">[</span><span class="n">gasId</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">data_s1</span><span class="p">[</span><span class="n">gasId</span><span class="p">]]</span>
+            <span class="n">a2</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_s2</span><span class="p">[</span><span class="n">gasId</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">data_s2</span><span class="p">[</span><span class="n">gasId</span><span class="p">]]</span>
+            <span class="n">a3</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_s3</span><span class="p">[</span><span class="n">gasId</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">data_s3</span><span class="p">[</span><span class="n">gasId</span><span class="p">]]</span>
+            <span class="n">a4</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_s4</span><span class="p">[</span><span class="n">gasId</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">data_s4</span><span class="p">[</span><span class="n">gasId</span><span class="p">]]</span>
+            <span class="n">a5</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">[</span><span class="n">gasId</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">a1</span><span class="p">,</span><span class="n">a2</span><span class="p">,</span><span class="n">a3</span><span class="p">,</span><span class="n">a4</span><span class="p">,</span><span class="n">a5</span>
+        <span class="k">elif</span><span class="p">(</span><span class="n">gasId</span><span class="o">==</span><span class="mi">2</span><span class="p">):</span>
+            <span class="n">a1</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_s1</span><span class="p">[</span><span class="n">gasId</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">data_s1</span><span class="p">[</span><span class="n">gasId</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span>
+            <span class="n">a2</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_s2</span><span class="p">[</span><span class="n">gasId</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">data_s2</span><span class="p">[</span><span class="n">gasId</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span>
+            <span class="n">a3</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_s3</span><span class="p">[</span><span class="n">gasId</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">data_s3</span><span class="p">[</span><span class="n">gasId</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span>
+            <span class="n">a4</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_s4</span><span class="p">[</span><span class="n">gasId</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">data_s4</span><span class="p">[</span><span class="n">gasId</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span>
+            <span class="n">a5</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">[</span><span class="n">gasId</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">a1</span><span class="p">,</span><span class="n">a2</span><span class="p">,</span><span class="n">a3</span><span class="p">,</span><span class="n">a4</span><span class="p">,</span><span class="n">a5</span>
+        <span class="k">elif</span><span class="p">(</span><span class="n">gasId</span><span class="o">==</span><span class="mi">3</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_s1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_s2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_s3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_s4</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[INFO] Error. Command not specified &lt;&lt;getSamplesCycles(self,id) id != 1,2,3&gt;&gt;&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Measure.readResponse"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.readResponse">[docs]</a>    <span class="k">def</span> <span class="nf">readResponse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gasId</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to read response in every cycle.\n</span>
+<span class="sd">        :param gasId: It is of the gas to be read with the method &lt;&lt;self.getSamplesCycles(gasId)&gt;&gt;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">s3</span><span class="p">,</span> <span class="n">s4</span><span class="p">,</span> <span class="n">samples</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSamplesCycles</span><span class="p">(</span><span class="n">gasId</span><span class="o">=</span><span class="n">gasId</span><span class="p">)</span>
+        <span class="n">gas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getGases</span><span class="p">()[</span><span class="n">gasId</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">s1</span> <span class="o">=</span> <span class="n">s1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">s2</span> <span class="o">=</span> <span class="n">s2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">s3</span> <span class="o">=</span> <span class="n">s3</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">s4</span> <span class="o">=</span> <span class="n">s4</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># Getting humidity</span>
+        <span class="n">humidity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getHumidity</span><span class="p">()</span>
+        <span class="c1"># Getting Voltage of Heaters</span>
+        <span class="n">voltage</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getVoltageHeaters</span><span class="p">()</span>
+        <span class="c1"># Initialization of the variables where the answers will be added.</span>
+        <span class="n">rs1</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">rs2</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">rs3</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">rs4</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">hum</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">v1</span>  <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">v2</span>  <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">v3</span>  <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">v4</span>  <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">gas_</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">samples</span><span class="p">)):</span>
+            <span class="c1"># We get the resistance indices to get the answer. The indices are calculated as:</span>
+            <span class="c1"># For the Rair, we subtract the value of the second element with the first one.</span>
+            <span class="c1"># For Rgas, subtract the value of the third element with the second and add the Rair.</span>
+            <span class="n">Rair_index</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">samples</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">Rgas_index</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">samples</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">Rair_index</span>
+
+            <span class="c1"># Getting Answers S1</span>
+            <span class="n">Rair</span> <span class="o">=</span> <span class="n">s1</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="n">Rair_index</span><span class="p">]</span>
+            <span class="n">Rgas</span> <span class="o">=</span> <span class="n">s1</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="n">Rgas_index</span><span class="p">]</span>
+            <span class="n">Rs1</span> <span class="o">=</span> <span class="n">Rgas</span> <span class="o">/</span> <span class="n">Rair</span>
+            <span class="n">rs1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rs1</span><span class="p">)</span>
+
+            <span class="c1"># Getting Answers S2</span>
+            <span class="n">Rair</span> <span class="o">=</span> <span class="n">s2</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="n">Rair_index</span><span class="p">]</span>
+            <span class="n">Rgas</span> <span class="o">=</span> <span class="n">s2</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="n">Rgas_index</span><span class="p">]</span>
+
+            <span class="n">Rs2</span> <span class="o">=</span> <span class="n">Rgas</span> <span class="o">/</span> <span class="n">Rair</span>
+            <span class="n">rs2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rs2</span><span class="p">)</span>
+
+            <span class="c1"># Getting Answers S3</span>
+            <span class="n">Rair</span> <span class="o">=</span> <span class="n">s3</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="n">Rair_index</span><span class="p">]</span>
+            <span class="n">Rgas</span> <span class="o">=</span> <span class="n">s3</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="n">Rgas_index</span><span class="p">]</span>
+
+            <span class="n">Rs3</span> <span class="o">=</span> <span class="n">Rgas</span> <span class="o">/</span> <span class="n">Rair</span>
+            <span class="n">rs3</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rs3</span><span class="p">)</span>
+
+            <span class="c1"># Getting Answers S4</span>
+            <span class="n">Rair</span> <span class="o">=</span> <span class="n">s4</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="n">Rair_index</span><span class="p">]</span>
+            <span class="n">Rgas</span> <span class="o">=</span> <span class="n">s4</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="n">Rgas_index</span><span class="p">]</span>
+
+            <span class="n">Rs4</span> <span class="o">=</span> <span class="n">Rgas</span> <span class="o">/</span> <span class="n">Rair</span>
+            <span class="n">rs4</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Rs4</span><span class="p">)</span>
+
+            <span class="c1"># We calculate the average humidity in the presence of the gas.</span>
+            <span class="n">lim_hum_sup</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">samples</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">lim_hum_inf</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">samples</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">temp_hum</span> <span class="o">=</span> <span class="n">humidity</span><span class="p">[</span><span class="n">lim_hum_inf</span><span class="p">:</span><span class="n">lim_hum_sup</span><span class="p">]</span>
+            <span class="c1"># Voltage</span>
+            <span class="n">temp_V1</span> <span class="o">=</span> <span class="n">voltage</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">lim_hum_inf</span><span class="p">:</span><span class="n">lim_hum_sup</span><span class="p">]</span>  <span class="c1"># V1</span>
+            <span class="n">temp_V2</span> <span class="o">=</span> <span class="n">voltage</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">lim_hum_inf</span><span class="p">:</span><span class="n">lim_hum_sup</span><span class="p">]</span>  <span class="c1"># V2</span>
+            <span class="n">temp_V3</span> <span class="o">=</span> <span class="n">voltage</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">lim_hum_inf</span><span class="p">:</span><span class="n">lim_hum_sup</span><span class="p">]</span>  <span class="c1"># V3</span>
+            <span class="n">temp_V4</span> <span class="o">=</span> <span class="n">voltage</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="n">lim_hum_inf</span><span class="p">:</span><span class="n">lim_hum_sup</span><span class="p">]</span>  <span class="c1"># V4</span>
+            <span class="c1"># Humidity Mean in these cycle</span>
+            <span class="n">hum_mean</span> <span class="o">=</span> <span class="n">getStatistics</span><span class="p">(</span><span class="n">temp_hum</span><span class="p">,</span> <span class="s1">&#39;Humidity&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="c1"># Voltage Means in these cycle</span>
+            <span class="n">V1_mean</span>  <span class="o">=</span> <span class="n">getStatistics</span><span class="p">(</span><span class="n">temp_V1</span><span class="p">,</span> <span class="s1">&#39;V1&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">V2_mean</span>  <span class="o">=</span> <span class="n">getStatistics</span><span class="p">(</span><span class="n">temp_V2</span><span class="p">,</span> <span class="s1">&#39;V2&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">V3_mean</span>  <span class="o">=</span> <span class="n">getStatistics</span><span class="p">(</span><span class="n">temp_V3</span><span class="p">,</span> <span class="s1">&#39;V3&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">V4_mean</span>  <span class="o">=</span> <span class="n">getStatistics</span><span class="p">(</span><span class="n">temp_V4</span><span class="p">,</span> <span class="s1">&#39;V4&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+            <span class="n">gas_mean</span> <span class="o">=</span> <span class="n">getStatistics</span><span class="p">(</span><span class="n">gas</span><span class="p">[</span><span class="n">samples</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">samples</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">2</span><span class="p">]],</span> <span class="s1">&#39;Gas Concentration&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">hum</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hum_mean</span><span class="p">)</span>
+
+            <span class="n">v1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">V1_mean</span><span class="p">)</span>
+            <span class="n">v2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">V2_mean</span><span class="p">)</span>
+            <span class="n">v3</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">V3_mean</span><span class="p">)</span>
+            <span class="n">v4</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">V4_mean</span><span class="p">)</span>
+
+            <span class="n">gas_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gas_mean</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">rs1</span> <span class="o">=</span> <span class="n">rs1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rs2</span> <span class="o">=</span> <span class="n">rs2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rs3</span> <span class="o">=</span> <span class="n">rs3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rs4</span> <span class="o">=</span> <span class="n">rs4</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hum</span> <span class="o">=</span> <span class="n">hum</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v1</span> <span class="o">=</span> <span class="n">v1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v2</span> <span class="o">=</span> <span class="n">v2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v3</span> <span class="o">=</span> <span class="n">v3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v4</span> <span class="o">=</span> <span class="n">v4</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gas_</span> <span class="o">=</span> <span class="n">gas_</span></div>
+
+<div class="viewcode-block" id="Measure.getVoltage"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.getVoltage">[docs]</a>    <span class="k">def</span> <span class="nf">getVoltage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return voltage value of heaters in every cycle of gas</span>
+<span class="sd">        :return: v1,v2,v3,v4</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">v1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">v2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">v3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">v4</span></div>
+
+<div class="viewcode-block" id="Measure.getResponse"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.getResponse">[docs]</a>    <span class="k">def</span> <span class="nf">getResponse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to get the response read.\n</span>
+<span class="sd">        :return: response_S1, response_S2, response_S3, response_S4, V1, V2, V3, V4</span>
+<span class="sd">        :rtype: list, list, list, list, list, list, list, list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rs1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rs2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rs3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rs4</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hum</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">v1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">v2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">v3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">v4</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gas_</span></div>
+
+<div class="viewcode-block" id="Measure.readSlopes"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.readSlopes">[docs]</a>    <span class="k">def</span> <span class="nf">readSlopes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gasName</span><span class="p">,</span> <span class="n">gasId</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to read the 3 slopes within gas cycle.\n</span>
+<span class="sd">        :param gasName: It&#39;s the name of the gas to be read</span>
+<span class="sd">        :param gasId: It is of the gas to be read with the method &lt;&lt;self.getSamplesCycles(gasId)&gt;&gt;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTime</span><span class="p">()</span>
+        <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">s3</span><span class="p">,</span> <span class="n">s4</span><span class="p">,</span> <span class="n">samples</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSamplesCycles</span><span class="p">(</span><span class="n">gasId</span><span class="o">=</span><span class="n">gasId</span><span class="p">)</span>
+        <span class="c1"># Sensor Data</span>
+        <span class="n">s1</span> <span class="o">=</span> <span class="n">s1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">s2</span> <span class="o">=</span> <span class="n">s2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">s3</span> <span class="o">=</span> <span class="n">s3</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">s4</span> <span class="o">=</span> <span class="n">s4</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># Sample time</span>
+        <span class="n">sampleTime</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSampleTimeMean</span><span class="p">()</span>
+        <span class="c1"># Path to store generated images</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">getPathImages</span><span class="p">()</span>
+        <span class="c1"># Gas concentration data</span>
+        <span class="n">gas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSimpleGas</span><span class="p">(</span><span class="n">gasName</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+
+        <span class="c1"># Variable for storing slopes</span>
+        <span class="n">slope1</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Variable para almacenar pendientes del sensor 1</span>
+        <span class="n">slope2</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Variable para almacenar pendientes del sensor 2</span>
+        <span class="n">slope3</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Variable para almacenar pendientes del sensor 3</span>
+        <span class="n">slope4</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Variable para almacenar pendientes del sensor 4</span>
+
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">samples</span><span class="p">)):</span>
+            <span class="c1"># We obtain the resistance indices that are found within the cycle, that is, in the presence of a gas</span>
+            <span class="c1"># pollutant.</span>
+            <span class="c1"># These limits are calculated to be used in the resistance array</span>
+            <span class="n">lim_inf_G</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">lim_sup_G</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+
+            <span class="c1"># These limits are calculated to be used in the time array and gas concentration</span>
+            <span class="n">lim_inf_R</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">samples</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">lim_sup_R</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">samples</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">lim_inf_R</span>
+
+            <span class="c1"># We get the cycle width (number of points). We divide in three the total of points to obtain three sections</span>
+            <span class="n">num_samples</span> <span class="o">=</span> <span class="p">(</span><span class="n">lim_sup_R</span> <span class="o">-</span> <span class="n">lim_inf_R</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
+
+            <span class="c1"># We get indexes tranches</span>
+            <span class="c1"># STEP 1</span>
+            <span class="c1"># Resistance</span>
+            <span class="n">tramo1_inf_R</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">lim_inf_R</span><span class="p">)</span>
+            <span class="n">tramo1_sup_R</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tramo1_inf_R</span> <span class="o">+</span> <span class="n">num_samples</span><span class="p">)</span>
+
+            <span class="c1"># Time and Concentration</span>
+            <span class="n">tramo1_inf_G</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">lim_inf_G</span><span class="p">)</span>
+            <span class="n">tramo1_sup_G</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tramo1_inf_G</span> <span class="o">+</span> <span class="n">num_samples</span><span class="p">)</span>
+
+            <span class="c1"># STEP 2</span>
+            <span class="n">tramo2_inf_R</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tramo1_sup_R</span><span class="p">)</span>
+            <span class="n">tramo2_sup_R</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tramo2_inf_R</span> <span class="o">+</span> <span class="n">num_samples</span><span class="p">)</span>
+
+            <span class="c1"># Time and Concentration</span>
+            <span class="n">tramo2_inf_G</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tramo1_sup_G</span><span class="p">)</span>
+            <span class="n">tramo2_sup_G</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tramo2_inf_G</span> <span class="o">+</span> <span class="n">num_samples</span><span class="p">)</span>
+
+            <span class="c1"># STEP 3</span>
+            <span class="n">tramo3_inf_R</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tramo2_sup_R</span><span class="p">)</span>
+            <span class="n">tramo3_sup_R</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tramo3_inf_R</span> <span class="o">+</span> <span class="n">num_samples</span><span class="p">)</span>
+
+            <span class="c1"># Time and Concentration</span>
+            <span class="n">tramo3_inf_G</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tramo2_sup_G</span><span class="p">)</span>
+            <span class="n">tramo3_sup_G</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tramo3_inf_G</span> <span class="o">+</span> <span class="n">num_samples</span><span class="p">)</span>
+
+            <span class="c1"># Obtaining the time value in each section</span>
+            <span class="c1"># STEP 1</span>
+            <span class="n">t1_1</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">tramo1_inf_G</span><span class="p">]</span>  <span class="c1"># T1 en tramo 1</span>
+            <span class="n">t2_1</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">tramo1_sup_G</span><span class="p">]</span>  <span class="c1"># T2 en tramo 1</span>
+
+            <span class="c1"># STEP 2</span>
+            <span class="n">t1_2</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">tramo2_inf_G</span><span class="p">]</span>  <span class="c1"># T1 en tramo 2</span>
+            <span class="n">t2_2</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">tramo2_sup_G</span><span class="p">]</span>  <span class="c1"># T2 en tramo 2</span>
+
+            <span class="c1"># STEP 3</span>
+            <span class="n">t1_3</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">tramo3_inf_G</span><span class="p">]</span>  <span class="c1"># T1 en tramo 3</span>
+            <span class="n">t2_3</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">tramo3_sup_G</span><span class="p">]</span>  <span class="c1"># T2 en tramo 3</span>
+
+            <span class="c1"># Plot step. Lower limit for the whole period</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
+
+            <span class="c1"># Obtaining the value of the resistance in each section. Included in the function is the calculation of the slope and</span>
+            <span class="c1"># its representation with the aim of making the program modular. Next we repeat the call to the</span>
+            <span class="c1"># &quot;process Earrings&quot; function for each sensor we have.</span>
+
+            <span class="c1"># SENSOR 1</span>
+            <span class="n">slope_</span><span class="p">,</span> <span class="n">n_</span> <span class="o">=</span> <span class="n">procesarPendientes</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span>
+                                             <span class="n">t1_1</span><span class="p">,</span> <span class="n">t2_1</span><span class="p">,</span>
+                                             <span class="n">t1_2</span><span class="p">,</span> <span class="n">t2_2</span><span class="p">,</span>
+                                             <span class="n">t1_3</span><span class="p">,</span> <span class="n">t2_3</span><span class="p">,</span>
+                                             <span class="n">tramo1_inf_R</span><span class="p">,</span> <span class="n">tramo1_sup_R</span><span class="p">,</span>
+                                             <span class="n">tramo2_inf_R</span><span class="p">,</span> <span class="n">tramo2_sup_R</span><span class="p">,</span>
+                                             <span class="n">tramo3_inf_R</span><span class="p">,</span> <span class="n">tramo3_sup_R</span><span class="p">)</span>
+
+            <span class="n">slope1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">slope_</span><span class="p">)</span>
+
+            <span class="c1"># We put a title to the figure and to the file to save it</span>
+            <span class="c1"># We put a title to the figure and to the file to save it</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Slope_S1_Cycle_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">gasName</span>
+            <span class="n">path_</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s1">&#39;Slopes/S1/&#39;</span> <span class="o">+</span> <span class="n">title</span> <span class="o">+</span> <span class="s1">&#39;.png&#39;</span>
+            <span class="n">plotSlope</span><span class="p">(</span><span class="n">Time</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="n">a</span><span class="p">:</span><span class="n">b</span><span class="p">],</span> <span class="n">Sensor</span><span class="o">=</span><span class="n">s1</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">Gas</span><span class="o">=</span><span class="n">gas</span><span class="p">[</span><span class="n">a</span><span class="p">:</span><span class="n">b</span><span class="p">],</span> <span class="n">Time_Final</span><span class="o">=</span><span class="p">[</span><span class="n">t2_1</span><span class="p">,</span> <span class="n">t2_2</span><span class="p">,</span> <span class="n">t2_3</span><span class="p">],</span>
+                             <span class="n">Time_Initial</span><span class="o">=</span><span class="p">[</span><span class="n">t1_1</span><span class="p">,</span> <span class="n">t1_2</span><span class="p">,</span> <span class="n">t1_3</span><span class="p">],</span> <span class="n">Sample_Time</span><span class="o">=</span><span class="n">sampleTime</span><span class="p">,</span> <span class="n">Slope</span><span class="o">=</span><span class="n">slope_</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="n">n_</span><span class="p">,</span> <span class="n">Path</span><span class="o">=</span><span class="n">path_</span><span class="p">,</span>
+                             <span class="n">Title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">Id</span><span class="o">=</span><span class="n">gasId</span><span class="p">)</span>
+
+            <span class="c1"># SENSOR 2</span>
+            <span class="n">slope_</span><span class="p">,</span> <span class="n">n_</span> <span class="o">=</span> <span class="n">procesarPendientes</span><span class="p">(</span><span class="n">s2</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span>
+                                             <span class="n">t1_1</span><span class="p">,</span> <span class="n">t2_1</span><span class="p">,</span>
+                                             <span class="n">t1_2</span><span class="p">,</span> <span class="n">t2_2</span><span class="p">,</span>
+                                             <span class="n">t1_3</span><span class="p">,</span> <span class="n">t2_3</span><span class="p">,</span>
+                                             <span class="n">tramo1_inf_R</span><span class="p">,</span> <span class="n">tramo1_sup_R</span><span class="p">,</span>
+                                             <span class="n">tramo2_inf_R</span><span class="p">,</span> <span class="n">tramo2_sup_R</span><span class="p">,</span>
+                                             <span class="n">tramo3_inf_R</span><span class="p">,</span> <span class="n">tramo3_sup_R</span><span class="p">)</span>
+
+            <span class="n">slope2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">slope_</span><span class="p">)</span>
+
+            <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Slope_S2_Cycle_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">gasName</span>
+            <span class="n">path_</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s1">&#39;Slopes/S2/&#39;</span> <span class="o">+</span> <span class="n">title</span> <span class="o">+</span> <span class="s1">&#39;.png&#39;</span>
+            <span class="n">plotSlope</span><span class="p">(</span><span class="n">Time</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="n">a</span><span class="p">:</span><span class="n">b</span><span class="p">],</span> <span class="n">Sensor</span><span class="o">=</span><span class="n">s2</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">Gas</span><span class="o">=</span><span class="n">gas</span><span class="p">[</span><span class="n">a</span><span class="p">:</span><span class="n">b</span><span class="p">],</span> <span class="n">Time_Final</span><span class="o">=</span><span class="p">[</span><span class="n">t2_1</span><span class="p">,</span> <span class="n">t2_2</span><span class="p">,</span> <span class="n">t2_3</span><span class="p">],</span>
+                             <span class="n">Time_Initial</span><span class="o">=</span><span class="p">[</span><span class="n">t1_1</span><span class="p">,</span> <span class="n">t1_2</span><span class="p">,</span> <span class="n">t1_3</span><span class="p">],</span> <span class="n">Sample_Time</span><span class="o">=</span><span class="n">sampleTime</span><span class="p">,</span> <span class="n">Slope</span><span class="o">=</span><span class="n">slope_</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="n">n_</span><span class="p">,</span> <span class="n">Path</span><span class="o">=</span><span class="n">path_</span><span class="p">,</span>
+                             <span class="n">Title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">Id</span><span class="o">=</span><span class="n">gasId</span><span class="p">)</span>
+
+            <span class="c1"># SENSOR 3</span>
+            <span class="n">slope_</span><span class="p">,</span> <span class="n">n_</span> <span class="o">=</span> <span class="n">procesarPendientes</span><span class="p">(</span><span class="n">s3</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span>
+                                             <span class="n">t1_1</span><span class="p">,</span> <span class="n">t2_1</span><span class="p">,</span>
+                                             <span class="n">t1_2</span><span class="p">,</span> <span class="n">t2_2</span><span class="p">,</span>
+                                             <span class="n">t1_3</span><span class="p">,</span> <span class="n">t2_3</span><span class="p">,</span>
+                                             <span class="n">tramo1_inf_R</span><span class="p">,</span> <span class="n">tramo1_sup_R</span><span class="p">,</span>
+                                             <span class="n">tramo2_inf_R</span><span class="p">,</span> <span class="n">tramo2_sup_R</span><span class="p">,</span>
+                                             <span class="n">tramo3_inf_R</span><span class="p">,</span> <span class="n">tramo3_sup_R</span><span class="p">)</span>
+
+            <span class="n">slope3</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">slope_</span><span class="p">)</span>
+
+            <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Slope_S3_Cycle_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">gasName</span>
+            <span class="n">path_</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s1">&#39;Slopes/S3/&#39;</span> <span class="o">+</span> <span class="n">title</span> <span class="o">+</span> <span class="s1">&#39;.png&#39;</span>
+            <span class="n">plotSlope</span><span class="p">(</span><span class="n">Time</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="n">a</span><span class="p">:</span><span class="n">b</span><span class="p">],</span> <span class="n">Sensor</span><span class="o">=</span><span class="n">s3</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">Gas</span><span class="o">=</span><span class="n">gas</span><span class="p">[</span><span class="n">a</span><span class="p">:</span><span class="n">b</span><span class="p">],</span> <span class="n">Time_Final</span><span class="o">=</span><span class="p">[</span><span class="n">t2_1</span><span class="p">,</span> <span class="n">t2_2</span><span class="p">,</span> <span class="n">t2_3</span><span class="p">],</span>
+                             <span class="n">Time_Initial</span><span class="o">=</span><span class="p">[</span><span class="n">t1_1</span><span class="p">,</span> <span class="n">t1_2</span><span class="p">,</span> <span class="n">t1_3</span><span class="p">],</span> <span class="n">Sample_Time</span><span class="o">=</span><span class="n">sampleTime</span><span class="p">,</span> <span class="n">Slope</span><span class="o">=</span><span class="n">slope_</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="n">n_</span><span class="p">,</span> <span class="n">Path</span><span class="o">=</span><span class="n">path_</span><span class="p">,</span>
+                             <span class="n">Title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">Id</span><span class="o">=</span><span class="n">gasId</span><span class="p">)</span>
+
+            <span class="c1"># SENSOR 4</span>
+            <span class="n">slope_</span><span class="p">,</span> <span class="n">n_</span> <span class="o">=</span> <span class="n">procesarPendientes</span><span class="p">(</span><span class="n">s4</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span>
+                                             <span class="n">t1_1</span><span class="p">,</span> <span class="n">t2_1</span><span class="p">,</span>
+                                             <span class="n">t1_2</span><span class="p">,</span> <span class="n">t2_2</span><span class="p">,</span>
+                                             <span class="n">t1_3</span><span class="p">,</span> <span class="n">t2_3</span><span class="p">,</span>
+                                             <span class="n">tramo1_inf_R</span><span class="p">,</span> <span class="n">tramo1_sup_R</span><span class="p">,</span>
+                                             <span class="n">tramo2_inf_R</span><span class="p">,</span> <span class="n">tramo2_sup_R</span><span class="p">,</span>
+                                             <span class="n">tramo3_inf_R</span><span class="p">,</span> <span class="n">tramo3_sup_R</span><span class="p">)</span>
+
+            <span class="n">slope4</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">slope_</span><span class="p">)</span>
+
+            <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Slope_S4_Cycle_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">gasName</span>
+            <span class="n">path_</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s1">&#39;Slopes/S4/&#39;</span> <span class="o">+</span> <span class="n">title</span> <span class="o">+</span> <span class="s1">&#39;.png&#39;</span>
+            <span class="n">plotSlope</span><span class="p">(</span><span class="n">Time</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="n">a</span><span class="p">:</span><span class="n">b</span><span class="p">],</span> <span class="n">Sensor</span><span class="o">=</span><span class="n">s4</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">Gas</span><span class="o">=</span><span class="n">gas</span><span class="p">[</span><span class="n">a</span><span class="p">:</span><span class="n">b</span><span class="p">],</span> <span class="n">Time_Final</span><span class="o">=</span><span class="p">[</span><span class="n">t2_1</span><span class="p">,</span> <span class="n">t2_2</span><span class="p">,</span> <span class="n">t2_3</span><span class="p">],</span>
+                             <span class="n">Time_Initial</span><span class="o">=</span><span class="p">[</span><span class="n">t1_1</span><span class="p">,</span> <span class="n">t1_2</span><span class="p">,</span> <span class="n">t1_3</span><span class="p">],</span> <span class="n">Sample_Time</span><span class="o">=</span><span class="n">sampleTime</span><span class="p">,</span> <span class="n">Slope</span><span class="o">=</span><span class="n">slope_</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="n">n_</span><span class="p">,</span> <span class="n">Path</span><span class="o">=</span><span class="n">path_</span><span class="p">,</span>
+                             <span class="n">Title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">Id</span><span class="o">=</span><span class="n">gasId</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">slope1</span> <span class="o">=</span> <span class="n">slope1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slope2</span> <span class="o">=</span> <span class="n">slope2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slope3</span> <span class="o">=</span> <span class="n">slope3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slope4</span> <span class="o">=</span> <span class="n">slope4</span></div>
+
+<div class="viewcode-block" id="Measure.getSlopes"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.getSlopes">[docs]</a>    <span class="k">def</span> <span class="nf">getSlopes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to get the slope processed.\n</span>
+<span class="sd">        :return: slope_S1, slope_S2, slope_S3, slope_S4</span>
+<span class="sd">        :rtype: list, list, list, list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">slope1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">slope2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">slope3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">slope4</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Measure.readCharacteristics"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.readCharacteristics">[docs]</a>    <span class="k">def</span> <span class="nf">readCharacteristics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to read Characteristics of the Measure, such us, response, adsorption and desorption time (not yet implemented), temperatures, slopes etc.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">gasId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">getIdGases</span><span class="p">()</span>
+        <span class="n">sampleTime</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSampleTimeMean</span><span class="p">()</span>
+
+        <span class="c1"># We save each parameter in a variable</span>
+        <span class="n">t_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Tiempo_segundos&#39;</span><span class="p">]</span>
+        <span class="n">gas1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">gasId</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">gas2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">gasId</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="n">gas1_name</span> <span class="o">=</span> <span class="n">gasId</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Nombre Gas 1</span>
+        <span class="n">gas2_name</span> <span class="o">=</span> <span class="n">gasId</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Nombre Gas 2</span>
+        <span class="n">humidity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Humidity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="c1"># We get those indices and number of cycads.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">readGasesCycles</span><span class="p">()</span>
+        <span class="n">num_cycle_gas1</span><span class="p">,</span> <span class="n">num_cycle_gas2</span><span class="p">,</span> <span class="n">gas1_index</span><span class="p">,</span> <span class="n">gas2_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getGasesCycles</span><span class="p">()</span>
+        <span class="c1"># We obtain the points corresponding to each cycle.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">readSamplesCycles</span><span class="p">()</span>
+        <span class="n">data_s1</span><span class="p">,</span> <span class="n">data_s2</span><span class="p">,</span> <span class="n">data_s3</span><span class="p">,</span> <span class="n">data_s4</span><span class="p">,</span> <span class="n">samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSamplesCycles</span><span class="p">(</span><span class="n">gasId</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="c1"># We get the answers corresponding to each cycle for the given gas</span>
+        <span class="c1"># In the first place it is checked with how many gases have been worked.</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">num_cycle_gas1</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">num_cycle_gas2</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------------------------------------------------------------------------------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[INFO] Processing data. Please wait...&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------------------------------------------------------------------------------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">readResponse</span><span class="p">(</span><span class="n">gasId</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">Gas1_rs1</span><span class="p">,</span> <span class="n">Gas1_rs2</span><span class="p">,</span> <span class="n">Gas1_rs3</span><span class="p">,</span> <span class="n">Gas1_rs4</span><span class="p">,</span> <span class="n">Gas1_humidity_cycles</span><span class="p">,</span> <span class="n">V1_1</span><span class="p">,</span> <span class="n">V2_1</span><span class="p">,</span> <span class="n">V3_1</span><span class="p">,</span> <span class="n">V4_1</span><span class="p">,</span> <span class="n">GasConcentration1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getResponse</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">readResponse</span><span class="p">(</span><span class="n">gasId</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">Gas2_rs1</span><span class="p">,</span> <span class="n">Gas2_rs2</span><span class="p">,</span> <span class="n">Gas2_rs3</span><span class="p">,</span> <span class="n">Gas2_rs4</span><span class="p">,</span> <span class="n">Gas2_humidity_cycles</span><span class="p">,</span> <span class="n">V1_2</span><span class="p">,</span> <span class="n">V2_2</span><span class="p">,</span> <span class="n">V3_2</span><span class="p">,</span> <span class="n">V4_2</span><span class="p">,</span> <span class="n">GasConcentration2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getResponse</span><span class="p">()</span>
+
+
+            <span class="c1"># We calculate the slopes of each cycle and store them in a variable</span>
+            <span class="c1"># Gas 1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">readSlopes</span><span class="p">(</span><span class="n">gasName</span><span class="o">=</span><span class="n">gas1_name</span><span class="p">,</span> <span class="n">gasId</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">Gas1_slopes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSlopes</span><span class="p">()</span>
+
+            <span class="c1"># Gas2</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">readSlopes</span><span class="p">(</span><span class="n">gasName</span><span class="o">=</span><span class="n">gas2_name</span><span class="p">,</span> <span class="n">gasId</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">Gas2_slopes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSlopes</span><span class="p">()</span>
+
+            <span class="c1"># Creation of the variable characteristics</span>
+            <span class="n">Gas1</span> <span class="o">=</span> <span class="n">gas1_name</span><span class="p">,</span> <span class="n">Gas1_rs1</span><span class="p">,</span> <span class="n">Gas1_rs2</span><span class="p">,</span> <span class="n">Gas1_rs3</span><span class="p">,</span> <span class="n">Gas1_rs4</span><span class="p">,</span> <span class="n">Gas1_humidity_cycles</span><span class="p">,</span> <span class="n">Gas1_slopes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Gas1_slopes</span><span class="p">[</span>
+                <span class="mi">1</span><span class="p">],</span> <span class="n">Gas1_slopes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">Gas1_slopes</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">V1_1</span><span class="p">,</span> <span class="n">V2_1</span><span class="p">,</span> <span class="n">V3_1</span><span class="p">,</span> <span class="n">V4_1</span><span class="p">,</span> <span class="n">GasConcentration1</span>
+            <span class="n">Gas2</span> <span class="o">=</span> <span class="n">gas2_name</span><span class="p">,</span> <span class="n">Gas2_rs1</span><span class="p">,</span> <span class="n">Gas2_rs2</span><span class="p">,</span> <span class="n">Gas2_rs3</span><span class="p">,</span> <span class="n">Gas2_rs4</span><span class="p">,</span> <span class="n">Gas2_humidity_cycles</span><span class="p">,</span> <span class="n">Gas2_slopes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Gas2_slopes</span><span class="p">[</span>
+                <span class="mi">1</span><span class="p">],</span> <span class="n">Gas2_slopes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">Gas2_slopes</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">V1_2</span><span class="p">,</span> <span class="n">V2_2</span><span class="p">,</span> <span class="n">V3_2</span><span class="p">,</span> <span class="n">V4_2</span><span class="p">,</span> <span class="n">GasConcentration2</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">Gas1</span> <span class="o">=</span> <span class="n">Gas1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Gas2</span> <span class="o">=</span> <span class="n">Gas2</span>
+
+        <span class="k">elif</span> <span class="p">(</span><span class="n">num_cycle_gas1</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------------------------------------------------------------------------------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[INFO] Processing data. Please wait...&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------------------------------------------------------------------------------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Reading of the answer in each cycle, we obtain results and store in variables.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">readResponse</span><span class="p">(</span><span class="n">gasId</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">Gas1_rs1</span><span class="p">,</span> <span class="n">Gas1_rs2</span><span class="p">,</span> <span class="n">Gas1_rs3</span><span class="p">,</span> <span class="n">Gas1_rs4</span><span class="p">,</span> <span class="n">Gas1_humidity_cycles</span><span class="p">,</span> <span class="n">V1</span><span class="p">,</span> <span class="n">V2</span><span class="p">,</span> <span class="n">V3</span><span class="p">,</span> <span class="n">V4</span><span class="p">,</span> <span class="n">GasConcentration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getResponse</span><span class="p">()</span>
+
+            <span class="c1"># We calculate the slopes and store them in a variable</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">readSlopes</span><span class="p">(</span><span class="n">gasName</span><span class="o">=</span><span class="n">gas1_name</span><span class="p">,</span> <span class="n">gasId</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">Gas1_slopes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSlopes</span><span class="p">()</span>
+
+            <span class="c1"># Creation of the variable characteristics</span>
+            <span class="n">Gas1</span> <span class="o">=</span> <span class="n">gas1_name</span><span class="p">,</span> \
+                   <span class="n">Gas1_rs1</span><span class="p">,</span> <span class="n">Gas1_rs2</span><span class="p">,</span> <span class="n">Gas1_rs3</span><span class="p">,</span> <span class="n">Gas1_rs4</span><span class="p">,</span> \
+                   <span class="n">Gas1_humidity_cycles</span><span class="p">,</span> \
+                   <span class="n">Gas1_slopes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Gas1_slopes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">Gas1_slopes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">Gas1_slopes</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>\
+                   <span class="n">V1</span><span class="p">,</span> <span class="n">V2</span><span class="p">,</span> <span class="n">V3</span><span class="p">,</span><span class="n">V4</span><span class="p">,</span> \
+                   <span class="n">GasConcentration</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">Gas1</span> <span class="o">=</span> <span class="n">Gas1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Gas2</span> <span class="o">=</span> <span class="mi">0</span>
+
+
+        <span class="k">elif</span> <span class="p">(</span><span class="n">num_cycle_gas2</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------------------------------------------------------------------------------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Procesando datos. Porfavor, espere...&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------------------------------------------------------------------------------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="c1"># Reading of the answer in each cycle, we obtain results and store in variables.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">readResponse</span><span class="p">(</span><span class="n">gasId</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">Gas2_rs1</span><span class="p">,</span> <span class="n">Gas2_rs2</span><span class="p">,</span> <span class="n">Gas2_rs3</span><span class="p">,</span> <span class="n">Gas2_rs4</span><span class="p">,</span> <span class="n">Gas2_humidity_cycles</span><span class="p">,</span> <span class="n">V1</span><span class="p">,</span> <span class="n">V2</span><span class="p">,</span> <span class="n">V3</span><span class="p">,</span> <span class="n">V4</span><span class="p">,</span> <span class="n">GasConcentration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getResponse</span><span class="p">()</span>
+
+            <span class="c1"># We calculate the slopes and store them in a variable</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">readSlopes</span><span class="p">(</span><span class="n">gasName</span><span class="o">=</span><span class="n">gas2_name</span><span class="p">,</span> <span class="n">gasId</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">Gas2_slopes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSlopes</span><span class="p">()</span>
+
+            <span class="c1"># Creation of the variable characteristics</span>
+            <span class="n">Gas2</span> <span class="o">=</span> <span class="n">gas2_name</span><span class="p">,</span> <span class="n">Gas2_rs1</span><span class="p">,</span> <span class="n">Gas2_rs2</span><span class="p">,</span> <span class="n">Gas2_rs3</span><span class="p">,</span> <span class="n">Gas2_rs4</span><span class="p">,</span> <span class="n">Gas2_humidity_cycles</span><span class="p">,</span> <span class="n">Gas2_slopes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Gas2_slopes</span><span class="p">[</span>
+                <span class="mi">1</span><span class="p">],</span> <span class="n">Gas2_slopes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">Gas2_slopes</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">V1</span><span class="p">,</span> <span class="n">V2</span><span class="p">,</span> <span class="n">V3</span><span class="p">,</span> <span class="n">V4</span><span class="p">,</span> \
+                   <span class="n">GasConcentration</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">Gas1</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Gas2</span> <span class="o">=</span> <span class="n">Gas2</span></div>
+
+<div class="viewcode-block" id="Measure.getCharacteristics"><a class="viewcode-back" href="../api_sensor.html#api_sensor.Measure.getCharacteristics">[docs]</a>    <span class="k">def</span> <span class="nf">getCharacteristics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to get the characteristics processed.</span>
+<span class="sd">        :return: Gas1, Gas2</span>
+<span class="sd">        :rtype: list, list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Gas1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Gas2</span></div></div>
+
+
+<div class="viewcode-block" id="getStatistics"><a class="viewcode-back" href="../api_sensor.html#api_sensor.getStatistics">[docs]</a><span class="k">def</span> <span class="nf">getStatistics</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span><span class="n">name</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Method to apply different statistics formulas, such as, mean, var etc. Depend on the output variable return one or other.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># We converted from List to DataFrame</span>
+    <span class="n">data_frame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">variable</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">output</span> <span class="o">==</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">media</span> <span class="o">=</span> <span class="n">data_frame</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Arithmetic mean</span>
+        <span class="k">return</span> <span class="n">media</span>
+    <span class="k">elif</span><span class="p">(</span> <span class="n">output</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">media_geometrica</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">gmean</span><span class="p">(</span><span class="n">data_frame</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Geometric mean</span>
+        <span class="k">return</span> <span class="n">media_geometrica</span>
+
+    <span class="k">elif</span> <span class="p">(</span><span class="n">output</span> <span class="o">==</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="n">media_armonica</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">hmean</span><span class="p">(</span><span class="n">data_frame</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Harmonic mean</span>
+        <span class="k">return</span> <span class="n">media_armonica</span>
+
+    <span class="k">elif</span> <span class="p">(</span><span class="n">output</span> <span class="o">==</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="n">mediana</span> <span class="o">=</span> <span class="n">data_frame</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Median</span>
+        <span class="k">return</span> <span class="n">mediana</span>
+
+    <span class="k">elif</span> <span class="p">(</span><span class="n">output</span> <span class="o">==</span> <span class="mi">5</span><span class="p">):</span>
+        <span class="n">moda</span> <span class="o">=</span> <span class="n">data_frame</span><span class="o">.</span><span class="n">mode</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Trendy</span>
+        <span class="k">return</span> <span class="n">moda</span>
+
+    <span class="k">elif</span> <span class="p">(</span><span class="n">output</span> <span class="o">==</span> <span class="mi">6</span><span class="p">):</span>
+        <span class="n">varianza</span> <span class="o">=</span> <span class="n">data_frame</span><span class="o">.</span><span class="n">var</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Variance</span>
+        <span class="k">return</span> <span class="n">varianza</span>
+
+    <span class="k">elif</span> <span class="p">(</span><span class="n">output</span> <span class="o">==</span> <span class="mi">7</span><span class="p">):</span>
+        <span class="n">varianza_estandar</span> <span class="o">=</span> <span class="n">data_frame</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Standar Variance</span>
+        <span class="k">return</span> <span class="n">varianza_estandar</span>
+
+    <span class="k">elif</span> <span class="p">(</span><span class="n">output</span> <span class="o">==</span> <span class="mi">8</span><span class="p">):</span>
+        <span class="n">descripcion_estadistica</span> <span class="o">=</span> <span class="n">data_frame</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">descripcion_estadistica</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[INFO] Error. Statistical resume&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="calculateSlope"><a class="viewcode-back" href="../api_sensor.html#api_sensor.calculateSlope">[docs]</a><span class="k">def</span> <span class="nf">calculateSlope</span><span class="p">(</span><span class="n">r2</span><span class="p">,</span><span class="n">r1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span><span class="n">t1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Method to calculate slope of a specific step.\n</span>
+<span class="sd">    :param r2: final resistance</span>
+<span class="sd">    :param r1: initial resistances</span>
+<span class="sd">    :param t2: final time</span>
+<span class="sd">    :param t1: initial time</span>
+<span class="sd">    :return: slope. (r2-r1)/(t2-t1)</span>
+<span class="sd">    :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">incResistencia</span> <span class="o">=</span> <span class="n">r2</span> <span class="o">-</span> <span class="n">r1</span>
+    <span class="n">incTiempo</span> <span class="o">=</span> <span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span>
+
+    <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">incResistencia</span><span class="p">)</span> <span class="o">/</span> <span class="n">incTiempo</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">r2</span> <span class="o">-</span> <span class="n">m</span><span class="o">*</span><span class="n">t2</span>
+
+    <span class="k">return</span> <span class="n">m</span><span class="p">,</span><span class="n">n</span></div>
+
+<div class="viewcode-block" id="plotSlope"><a class="viewcode-back" href="../api_sensor.html#api_sensor.plotSlope">[docs]</a><span class="k">def</span> <span class="nf">plotSlope</span><span class="p">(</span><span class="n">Time</span><span class="p">,</span> <span class="n">Sensor</span><span class="p">,</span><span class="n">Gas</span><span class="p">,</span> <span class="n">Time_Final</span><span class="p">,</span> <span class="n">Time_Initial</span><span class="p">,</span><span class="n">Sample_Time</span><span class="p">,</span> <span class="n">Slope</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span><span class="n">Path</span><span class="p">,</span> <span class="n">Title</span><span class="p">,</span> <span class="n">Id</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Method to plot the slopes calculated.\n</span>
+<span class="sd">    :param Time: time variable</span>
+<span class="sd">    :param Sensor: sensor data</span>
+<span class="sd">    :param Gas: gas data</span>
+<span class="sd">    :param Time_Final: Final time data</span>
+<span class="sd">    :param Time_Initial: Initial Time data</span>
+<span class="sd">    :param Sample_Time: Sample time Mean calculated</span>
+<span class="sd">    :param Slope: Slope calculated</span>
+<span class="sd">    :param N: n value of line (y=slope*x+N)</span>
+<span class="sd">    :param Path: Path to be stored</span>
+<span class="sd">    :param Title: Title to be stored</span>
+<span class="sd">    :param Id: Gas id</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="n">Time</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">Sensor</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+    <span class="c1"># We get the previously calculated limit values for each leg</span>
+    <span class="c1"># STEP 1</span>
+    <span class="n">tf1</span> <span class="o">=</span> <span class="n">Time_Final</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">ti1</span> <span class="o">=</span> <span class="n">Time_Initial</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># STEP 2</span>
+    <span class="n">tf2</span> <span class="o">=</span> <span class="n">Time_Final</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">ti2</span> <span class="o">=</span> <span class="n">Time_Initial</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># STEP 3</span>
+    <span class="n">tf3</span> <span class="o">=</span> <span class="n">Time_Final</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">ti3</span> <span class="o">=</span> <span class="n">Time_Initial</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="c1"># We get the slopes of the three sections</span>
+    <span class="c1"># STEP 1</span>
+    <span class="n">m1</span> <span class="o">=</span> <span class="n">Slope</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">n1</span> <span class="o">=</span> <span class="n">N</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># We calculate the line to represent it</span>
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">ti1</span><span class="p">),</span><span class="nb">int</span><span class="p">(</span><span class="n">tf1</span><span class="p">),</span><span class="nb">int</span><span class="p">(</span><span class="n">Sample_Time</span><span class="p">))</span>
+    <span class="n">y1</span> <span class="o">=</span> <span class="n">m1</span><span class="o">*</span><span class="n">x1</span> <span class="o">+</span> <span class="n">n1</span>
+
+    <span class="c1"># STEP 2</span>
+    <span class="n">m2</span> <span class="o">=</span> <span class="n">Slope</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">n2</span> <span class="o">=</span> <span class="n">N</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># We calculate the line to represent it</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">ti2</span><span class="p">),</span><span class="nb">int</span><span class="p">(</span><span class="n">tf2</span><span class="p">),</span><span class="nb">int</span><span class="p">(</span><span class="n">Sample_Time</span><span class="p">))</span>
+    <span class="n">y2</span> <span class="o">=</span> <span class="n">m2</span><span class="o">*</span><span class="n">x2</span> <span class="o">+</span> <span class="n">n2</span>
+
+    <span class="c1"># STEP 3</span>
+    <span class="n">m3</span> <span class="o">=</span> <span class="n">Slope</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">n3</span> <span class="o">=</span> <span class="n">N</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="c1"># We calculate the line to represent it</span>
+    <span class="n">x3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">ti3</span><span class="p">),</span><span class="nb">int</span><span class="p">(</span><span class="n">tf3</span><span class="p">),</span><span class="nb">int</span><span class="p">(</span><span class="n">Sample_Time</span><span class="p">))</span>
+    <span class="n">y3</span> <span class="o">=</span> <span class="n">m3</span><span class="o">*</span><span class="n">x3</span> <span class="o">+</span> <span class="n">n3</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">Title</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+    <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;tab:blue&#39;</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Resistance (Ohms)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">Sensor</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelcolor</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="s1">&#39;--r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;slope1&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="s1">&#39;--m&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;slope2&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x3</span><span class="p">,</span> <span class="n">y3</span><span class="p">,</span> <span class="s1">&#39;--y&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;slope3&#39;</span><span class="p">)</span>
+
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+    <span class="n">ax2</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>  <span class="c1"># instantiate a second axes that shares the same x-axis</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;tab:green&#39;</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">Id</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>  <span class="c1"># we already handled the x-label with ax1</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">Gas</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelcolor</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>  <span class="c1"># otherwise the right y-label is slightly clipped</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">Path</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="procesarPendientes"><a class="viewcode-back" href="../api_sensor.html#api_sensor.procesarPendientes">[docs]</a><span class="k">def</span> <span class="nf">procesarPendientes</span><span class="p">(</span><span class="n">sensor</span><span class="p">,</span><span class="n">index</span><span class="p">,</span><span class="n">t1_1</span><span class="p">,</span><span class="n">t2_1</span><span class="p">,</span><span class="n">t1_2</span><span class="p">,</span><span class="n">t2_2</span><span class="p">,</span><span class="n">t1_3</span><span class="p">,</span><span class="n">t2_3</span><span class="p">,</span><span class="n">tramo1_inf_R</span><span class="p">,</span> <span class="n">tramo1_sup_R</span><span class="p">,</span><span class="n">tramo2_inf_R</span><span class="p">,</span> <span class="n">tramo2_sup_R</span><span class="p">,</span><span class="n">tramo3_inf_R</span><span class="p">,</span> <span class="n">tramo3_sup_R</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Method to calculate the three slopes in a specific cycle.\n</span>
+<span class="sd">    :param sensor: Sensor data</span>
+<span class="sd">    :param index:  Index of data in a specific cycle</span>
+<span class="sd">    :param t1_1:  time1_1. Time 1 step 1</span>
+<span class="sd">    :param t2_1:  time2_1. Time 2 step 2</span>
+<span class="sd">    :param t1_2:  time1_2. Time 1 step 2</span>
+<span class="sd">    :param t2_2:  time2_2. Time 2 step 2</span>
+<span class="sd">    :param t1_3:  time1_3. Time 1 step 3</span>
+<span class="sd">    :param t2_3:  time2_3. Time 2 step 3</span>
+<span class="sd">    :param tramo1_inf_R: Value of resistance inf in step 1</span>
+<span class="sd">    :param tramo1_sup_R: Value of resistance sup in step 1</span>
+<span class="sd">    :param tramo2_inf_R: Value of resistance inf in step 2</span>
+<span class="sd">    :param tramo2_sup_R: Value of resistance sup in step 2</span>
+<span class="sd">    :param tramo3_inf_R: Value of resistance inf in step 3</span>
+<span class="sd">    :param tramo3_sup_R: Value of resistance sup in step 3</span>
+<span class="sd">    :return: m, n</span>
+<span class="sd">    :rtype: list, list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">r1_1_1</span> <span class="o">=</span> <span class="n">sensor</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="n">tramo1_inf_R</span><span class="p">]</span>  <span class="c1"># Sensor point S1, 1 in section 1</span>
+    <span class="n">r1_2_1</span> <span class="o">=</span> <span class="n">sensor</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="n">tramo1_sup_R</span><span class="p">]</span>  <span class="c1"># Sensor point S1, 2 in section 1</span>
+
+    <span class="n">r1_1_2</span> <span class="o">=</span> <span class="n">sensor</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="n">tramo2_inf_R</span><span class="p">]</span>  <span class="c1"># Sensor point S1, 1 in section 2</span>
+    <span class="n">r1_2_2</span> <span class="o">=</span> <span class="n">sensor</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="n">tramo2_sup_R</span><span class="p">]</span>  <span class="c1"># Sensor point S1, 2 in section 2</span>
+
+    <span class="n">r1_1_3</span> <span class="o">=</span> <span class="n">sensor</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="n">tramo3_inf_R</span><span class="p">]</span>  <span class="c1"># Sensor point S1, 1 in section 3</span>
+    <span class="n">r1_2_3</span> <span class="o">=</span> <span class="n">sensor</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="n">tramo3_sup_R</span><span class="p">]</span>  <span class="c1"># Sensor point S1, 2 in section 3</span>
+
+    <span class="c1"># Calculation of slope (increaseResistance / increaseTime) in each section</span>
+    <span class="c1"># STEP 1</span>
+    <span class="n">m1</span><span class="p">,</span> <span class="n">n1</span> <span class="o">=</span> <span class="n">calculateSlope</span><span class="p">(</span><span class="n">r1_2_1</span><span class="p">,</span> <span class="n">r1_1_1</span><span class="p">,</span> <span class="n">t2_1</span><span class="p">,</span> <span class="n">t1_1</span><span class="p">)</span>
+
+    <span class="c1"># STEP 2</span>
+    <span class="n">m2</span><span class="p">,</span> <span class="n">n2</span> <span class="o">=</span> <span class="n">calculateSlope</span><span class="p">(</span><span class="n">r1_2_2</span><span class="p">,</span> <span class="n">r1_1_2</span><span class="p">,</span> <span class="n">t2_2</span><span class="p">,</span> <span class="n">t1_2</span><span class="p">)</span>
+
+    <span class="c1"># STEP 3</span>
+    <span class="n">m3</span><span class="p">,</span> <span class="n">n3</span> <span class="o">=</span> <span class="n">calculateSlope</span><span class="p">(</span><span class="n">r1_2_3</span><span class="p">,</span> <span class="n">r1_1_3</span><span class="p">,</span> <span class="n">t2_3</span><span class="p">,</span> <span class="n">t1_3</span><span class="p">)</span>
+
+    <span class="n">slope_</span> <span class="o">=</span> <span class="p">[</span><span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="n">m3</span><span class="p">]</span>
+    <span class="n">n_</span>     <span class="o">=</span> <span class="p">[</span><span class="n">n1</span><span class="p">,</span> <span class="n">n2</span><span class="p">,</span> <span class="n">n3</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">slope_</span><span class="p">,</span> <span class="n">n_</span></div>
+
+</pre></div>
+
+          </div>
+            
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MOSsensor 0.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="../_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 2019, Sergio Masa. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>

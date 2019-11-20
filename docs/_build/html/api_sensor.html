@@ -1,0 +1,524 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta charset="utf-8" />
+  
+  <!-- Licensed under the Apache 2.0 License -->
+  <link rel="stylesheet" type="text/css" href="_static/fonts/open-sans/stylesheet.css" />
+  <!-- Licensed under the SIL Open Font License -->
+  <link rel="stylesheet" type="text/css" href="_static/fonts/source-serif-pro/source-serif-pro.css" />
+  <link rel="stylesheet" type="text/css" href="_static/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="_static/css/bootstrap-theme.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>api_sensor module &#8212; MOSsensor 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/guzzle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="sensor module" href="sensor.html" />
+    <link rel="prev" title="api_excel module" href="api_excel.html" />
+  
+   
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sensor.html" title="sensor module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api_excel.html" title="api_excel module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MOSsensor 0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="container-wrapper">
+
+      <div id="mobile-toggle">
+        <a href="#"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+      </div>
+  <div id="left-column">
+    <div class="sphinxsidebar">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="api_excel.html"
+                        title="previous chapter">api_excel module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sensor.html"
+                        title="next chapter">sensor module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/api_sensor.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div class="sidebar-block">
+  <div class="sidebar-wrapper">
+    <div id="main-search">
+      <form class="form-inline" action="search.html" method="GET" role="form">
+        <div class="input-group">
+          <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+        <div id="right-column">
+          
+          <div role="navigation" aria-label="breadcrumbs navigation">
+            <ol class="breadcrumb">
+              <li><a href="index.html">Docs</a></li>
+              
+              <li>api_sensor module</li>
+            </ol>
+          </div>
+          
+          <div class="document clearer body">
+            
+  <div class="section" id="module-api_sensor">
+<span id="api-sensor-module"></span><h1>api_sensor module<a class="headerlink" href="#module-api_sensor" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="api_sensor.Measure">
+<em class="property">class </em><code class="sig-prename descclassname">api_sensor.</code><code class="sig-name descname">Measure</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Measure class. We use this as a public class example class. It has the necessary methods to process the
+previously created file</p>
+<p><strong>* Note: You never call this class before create a file object.*</strong></p>
+<dl class="method">
+<dt id="api_sensor.Measure.getCharacteristics">
+<code class="sig-name descname">getCharacteristics</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.getCharacteristics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.getCharacteristics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to get the characteristics processed.
+:return: Gas1, Gas2
+:rtype: list, list</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.getCyclesData">
+<code class="sig-name descname">getCyclesData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.getCyclesData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.getCyclesData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.getGases">
+<code class="sig-name descname">getGases</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.getGases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.getGases" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to get the gases name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>gas1_name, gas2_name</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str, str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.getGasesCycles">
+<code class="sig-name descname">getGasesCycles</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.getGasesCycles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.getGasesCycles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to get the gas cycle variables</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>number_of_cycles_gas1, number_of_cycles_gas2, gas1_index, gas2_index</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int, int, list, list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.getHumidity">
+<code class="sig-name descname">getHumidity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.getHumidity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.getHumidity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to get the humidity variable of measure</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>humidity(%)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.getIndexCycleGas">
+<code class="sig-name descname">getIndexCycleGas</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.getIndexCycleGas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.getIndexCycleGas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to get the gas cycle index</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>gas1_index, gas2_index</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list, list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.getNumCycleGas">
+<code class="sig-name descname">getNumCycleGas</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.getNumCycleGas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.getNumCycleGas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to get the gas cycle number</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>number_of_cycles_gas1, number_of_cycles_gas2</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int, int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.getResponse">
+<code class="sig-name descname">getResponse</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.getResponse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.getResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to get the response read.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>response_S1, response_S2, response_S3, response_S4, V1, V2, V3, V4</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list, list, list, list, list, list, list, list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.getSampleTime">
+<code class="sig-name descname">getSampleTime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.getSampleTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.getSampleTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to get the sample time processed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>sample_time</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.getSampleTimeMean">
+<code class="sig-name descname">getSampleTimeMean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.getSampleTimeMean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.getSampleTimeMean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to get the sample time mean</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>sample_time_mean</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.getSamplesCycles">
+<code class="sig-name descname">getSamplesCycles</code><span class="sig-paren">(</span><em class="sig-param">gasId</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.getSamplesCycles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.getSamplesCycles" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>gasId</strong> – Id to return data.</p>
+</dd>
+</dl>
+<p>If gasId=1 return gas1 data.</p>
+<p>If gasId=2 return gas2 data.</p>
+<p>If gasId=3 return gas1 and gas2 data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.getSensor">
+<code class="sig-name descname">getSensor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.getSensor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.getSensor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to get the sensor values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>[s1,s2,s3,s4]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.getSimpleGas">
+<code class="sig-name descname">getSimpleGas</code><span class="sig-paren">(</span><em class="sig-param">gasId</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.getSimpleGas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.getSimpleGas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to get a gas name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>gasX_name</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.getSlopes">
+<code class="sig-name descname">getSlopes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.getSlopes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.getSlopes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to get the slope processed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>slope_S1, slope_S2, slope_S3, slope_S4</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list, list, list, list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.getTime">
+<code class="sig-name descname">getTime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.getTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.getTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to get the time variable of measure</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>time_(seconds)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.getTsSteps">
+<code class="sig-name descname">getTsSteps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.getTsSteps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.getTsSteps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to return t_s list[cycle1, cycle2,…,cyclen]
+:return: t_s_steps
+:rtype: list[cycle_i, …, cycle_n]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.getVoltage">
+<code class="sig-name descname">getVoltage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.getVoltage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.getVoltage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return voltage value of heaters in every cycle of gas
+:return: v1,v2,v3,v4</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.getVoltageHeaters">
+<code class="sig-name descname">getVoltageHeaters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.getVoltageHeaters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.getVoltageHeaters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to get the voltage variable of measure</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>voltage(mV)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.readCharacteristics">
+<code class="sig-name descname">readCharacteristics</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.readCharacteristics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.readCharacteristics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to read Characteristics of the Measure, such us, response, adsorption and desorption time (not yet implemented), temperatures, slopes etc.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.readCyclesData">
+<code class="sig-name descname">readCyclesData</code><span class="sig-paren">(</span><em class="sig-param">Gas</em>, <em class="sig-param">Index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.readCyclesData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.readCyclesData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to read data of every Cycle getting variables list with a number of elements equal to number of cycle gas</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.readGasesCycles">
+<code class="sig-name descname">readGasesCycles</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.readGasesCycles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.readGasesCycles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to read the different gas cyles in order to obtain the index where concentration changes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.readResponse">
+<code class="sig-name descname">readResponse</code><span class="sig-paren">(</span><em class="sig-param">gasId</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.readResponse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.readResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to read response in every cycle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>gasId</strong> – It is of the gas to be read with the method &lt;&lt;self.getSamplesCycles(gasId)&gt;&gt;</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.readSampleTime">
+<code class="sig-name descname">readSampleTime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.readSampleTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.readSampleTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to read the sample time in the measure.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.readSamplesCycles">
+<code class="sig-name descname">readSamplesCycles</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.readSamplesCycles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.readSamplesCycles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to read data in every cycle generating an output list where</p>
+<ol class="arabic simple">
+<li><p>Element 0 are sensor values gas 1.</p></li>
+<li><p>Element 1 are gas 1 values.</p></li>
+<li><p>Element 2 are sensor values gas 2.</p></li>
+<li><p>Element 3 are gas 2 values.</p></li>
+</ol>
+</dd></dl>
+
+<dl class="method">
+<dt id="api_sensor.Measure.readSlopes">
+<code class="sig-name descname">readSlopes</code><span class="sig-paren">(</span><em class="sig-param">gasName</em>, <em class="sig-param">gasId</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#Measure.readSlopes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.Measure.readSlopes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to read the 3 slopes within gas cycle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gasName</strong> – It’s the name of the gas to be read</p></li>
+<li><p><strong>gasId</strong> – It is of the gas to be read with the method &lt;&lt;self.getSamplesCycles(gasId)&gt;&gt;</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="api_sensor.calculateSlope">
+<code class="sig-prename descclassname">api_sensor.</code><code class="sig-name descname">calculateSlope</code><span class="sig-paren">(</span><em class="sig-param">r2</em>, <em class="sig-param">r1</em>, <em class="sig-param">t2</em>, <em class="sig-param">t1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#calculateSlope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.calculateSlope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to calculate slope of a specific step.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r2</strong> – final resistance</p></li>
+<li><p><strong>r1</strong> – initial resistances</p></li>
+<li><p><strong>t2</strong> – final time</p></li>
+<li><p><strong>t1</strong> – initial time</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>slope. (r2-r1)/(t2-t1)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="api_sensor.getStatistics">
+<code class="sig-prename descclassname">api_sensor.</code><code class="sig-name descname">getStatistics</code><span class="sig-paren">(</span><em class="sig-param">variable</em>, <em class="sig-param">name</em>, <em class="sig-param">output</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#getStatistics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.getStatistics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to apply different statistics formulas, such as, mean, var etc. Depend on the output variable return one or other.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="api_sensor.plotSlope">
+<code class="sig-prename descclassname">api_sensor.</code><code class="sig-name descname">plotSlope</code><span class="sig-paren">(</span><em class="sig-param">Time</em>, <em class="sig-param">Sensor</em>, <em class="sig-param">Gas</em>, <em class="sig-param">Time_Final</em>, <em class="sig-param">Time_Initial</em>, <em class="sig-param">Sample_Time</em>, <em class="sig-param">Slope</em>, <em class="sig-param">N</em>, <em class="sig-param">Path</em>, <em class="sig-param">Title</em>, <em class="sig-param">Id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#plotSlope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.plotSlope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to plot the slopes calculated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Time</strong> – time variable</p></li>
+<li><p><strong>Sensor</strong> – sensor data</p></li>
+<li><p><strong>Gas</strong> – gas data</p></li>
+<li><p><strong>Time_Final</strong> – Final time data</p></li>
+<li><p><strong>Time_Initial</strong> – Initial Time data</p></li>
+<li><p><strong>Sample_Time</strong> – Sample time Mean calculated</p></li>
+<li><p><strong>Slope</strong> – Slope calculated</p></li>
+<li><p><strong>N</strong> – n value of line (y=slope*x+N)</p></li>
+<li><p><strong>Path</strong> – Path to be stored</p></li>
+<li><p><strong>Title</strong> – Title to be stored</p></li>
+<li><p><strong>Id</strong> – Gas id</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="api_sensor.procesarPendientes">
+<code class="sig-prename descclassname">api_sensor.</code><code class="sig-name descname">procesarPendientes</code><span class="sig-paren">(</span><em class="sig-param">sensor</em>, <em class="sig-param">index</em>, <em class="sig-param">t1_1</em>, <em class="sig-param">t2_1</em>, <em class="sig-param">t1_2</em>, <em class="sig-param">t2_2</em>, <em class="sig-param">t1_3</em>, <em class="sig-param">t2_3</em>, <em class="sig-param">tramo1_inf_R</em>, <em class="sig-param">tramo1_sup_R</em>, <em class="sig-param">tramo2_inf_R</em>, <em class="sig-param">tramo2_sup_R</em>, <em class="sig-param">tramo3_inf_R</em>, <em class="sig-param">tramo3_sup_R</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api_sensor.html#procesarPendientes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api_sensor.procesarPendientes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to calculate the three slopes in a specific cycle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sensor</strong> – Sensor data</p></li>
+<li><p><strong>index</strong> – Index of data in a specific cycle</p></li>
+<li><p><strong>t1_1</strong> – time1_1. Time 1 step 1</p></li>
+<li><p><strong>t2_1</strong> – time2_1. Time 2 step 2</p></li>
+<li><p><strong>t1_2</strong> – time1_2. Time 1 step 2</p></li>
+<li><p><strong>t2_2</strong> – time2_2. Time 2 step 2</p></li>
+<li><p><strong>t1_3</strong> – time1_3. Time 1 step 3</p></li>
+<li><p><strong>t2_3</strong> – time2_3. Time 2 step 3</p></li>
+<li><p><strong>tramo1_inf_R</strong> – Value of resistance inf in step 1</p></li>
+<li><p><strong>tramo1_sup_R</strong> – Value of resistance sup in step 1</p></li>
+<li><p><strong>tramo2_inf_R</strong> – Value of resistance inf in step 2</p></li>
+<li><p><strong>tramo2_sup_R</strong> – Value of resistance sup in step 2</p></li>
+<li><p><strong>tramo3_inf_R</strong> – Value of resistance inf in step 3</p></li>
+<li><p><strong>tramo3_sup_R</strong> – Value of resistance sup in step 3</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>m, n</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list, list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+            
+  <div class="footer-relations">
+    
+      <div class="pull-left">
+        <a class="btn btn-default" href="api_excel.html" title="previous chapter (use the left arrow)">api_excel module</a>
+      </div>
+    
+      <div class="pull-right">
+        <a class="btn btn-default" href="sensor.html" title="next chapter (use the right arrow)">sensor module</a>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sensor.html" title="sensor module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="api_excel.html" title="api_excel module"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MOSsensor 0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+<script type="text/javascript">
+  $("#mobile-toggle a").click(function () {
+    $("#left-column").toggle();
+  });
+</script>
+<script type="text/javascript" src="_static/js/bootstrap.js"></script>
+  <div class="footer">
+    &copy; Copyright 2019, Sergio Masa. Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+  </body>
+</html>
