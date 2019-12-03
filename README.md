@@ -1,2 +1,0 @@
-# NanoSenAQM
-NanoSenAQM EU Project
