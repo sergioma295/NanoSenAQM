@@ -27,7 +27,11 @@ def init():
     parser.add_argument('--t', metavar='Tipo de linea',
                         help='Enter the file type [1-Electrometer Line; 2-Wiinose Line]')
     args = parser.parse_args()
+<<<<<<< HEAD
     args.f = "F1_1(1)"
+=======
+    args.f = "CNM_V4(2)"
+>>>>>>> 0320fea5a7aa56c15f2e0be37345741fc267ad97
     args.t = '1'
     print("\n[INFO] File name " + args.f + " \n[INFO] Line Type: " + str(args.t))
     name = args.f
