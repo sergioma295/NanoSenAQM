@@ -35,7 +35,7 @@ def init():
     return name, type
 
 
-def saveFeatures(features, path_output, name_gases):
+def saveFeatures(features,data, path_output, name_gases): # CAMBIO Add: data
     """
        Method that saves the characteristics in excel with a certain format by calling the function api_excel.saveFeatures2Excel.
        :type features: str
@@ -49,8 +49,8 @@ def saveFeatures(features, path_output, name_gases):
        """
     # Save as .xlsx
     for index in range(len(features)):
-        if (features[index] != 0):
-            api_excel.saveFeatures2Excel(features[index],path_output,name_gases[index])
+        if (features[index] != 0 and index<=1):
+            api_excel.saveFeatures2Excel(features[index],features[index+2],data,path_output,name_gases[index]) # CAMBIO Add: features[index+2], data
         else:
             continue
 
@@ -85,7 +85,7 @@ def main():
     measure.readCharacteristics()
     features = measure.getCharacteristics()
     # Save Features
-    saveFeatures(features,file.getPathOutput(),file.getIdGases())
+    saveFeatures(features, measure.getDatafromMeasure(),file.getPathOutput(),file.getIdGases()) # CAMBIO Add measure.getDatafromMeasure()
 
 
 

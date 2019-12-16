@@ -178,6 +178,13 @@ class Measure():
 
         return [V1,V2,V3,V4]
 
+    def getDatafromMeasure(self):
+        """
+        Method to get all data in this measure
+        :return: data
+        :rtype: DataFrame
+        """
+        return self.data
 
     def readCyclesData(self,Gas, Index):
         """
@@ -250,6 +257,7 @@ class Measure():
         self.dataGas = data_gas
         self.samples = samples
         self.t_s_steps = t_s
+        self.index = Index # CAMBIO
 
     def getTsSteps(self):
         """
@@ -771,7 +779,7 @@ class Measure():
         :return: Gas1, Gas2
         :rtype: list, list
         """
-        return self.Gas1, self.Gas2
+        return self.Gas1, self.Gas2, self.index # CAMBIO self.index
 
 
 def getStatistics(variable,name, output):

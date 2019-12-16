@@ -37,13 +37,16 @@ def export2Excel(data, path, name):
     # Close book
     workbook.close()
 
-def saveFeatures2Excel(data,path,name):
+def saveFeatures2Excel(data,index,measure, path,name): # CAMBIO Add: index, measure
     """
     Storage of the characteristics in a .xlsx file with a certain format and with the name of the gas from which these\n
     characteristics have been obtained.\n
 
     :param data: Features to storage
     :type data: List
+
+    :param index: Index of Ra & Rg
+    :type index: List(int)
 
     :param path: Path to storage
     :type path: str
@@ -76,6 +79,7 @@ def saveFeatures2Excel(data,path,name):
 
     GasConcentration = data[14]
 
+
     data_ = []
     title = ['Ciclo',
              'Respuesta_S1','Respuesta_S2','Respuesta_S3','Respuesta_S4',
@@ -101,14 +105,71 @@ def saveFeatures2Excel(data,path,name):
     # We create a woorkbook in a folder
     workbook = xlsxwriter.Workbook(path)
     worksheet = workbook.add_worksheet(name='Caracteristicas')
-
-
     for row, item in enumerate(data_):
         for col in range(len(data_[0])):
             worksheet.write(row, col, item[col])
 
+    # CAMBIO
+    nameSheet = 'Ra-Rg'
+    index.pop(0)
+    index.pop(len(index)-1)
+    worksheet_index = workbook.add_worksheet(name=nameSheet)
+    dataIndex = []
+    sensors ="S1","S2","S3","S4"
+    Ra = sensors
+    Rg = sensors
+    S1 = measure['S1'].tolist()
+    S2 = measure['S2'].tolist()
+    S3 = measure['S3'].tolist()
+    S4 = measure['S4'].tolist()
+    dataIndex.append(index)
+
+    #print("Fila: ", 0, "Col ", 0, "Dato ", nameSheet)
+    worksheet_index.write(0, 0, "Cycle")
+    worksheet_index.write(0, 1, "Index Ra")
+    worksheet_index.write(0, 2, "Index Rg")
+    worksheet_index.write(0, 3, "Ra1")
+    worksheet_index.write(0, 4, "Rg1")
+    worksheet_index.write(0, 5, "Ra2")
+    worksheet_index.write(0, 6, "Rg2")
+    worksheet_index.write(0, 7, "Ra3")
+    worksheet_index.write(0, 8, "Rg3")
+    worksheet_index.write(0, 9, "Ra4")
+    worksheet_index.write(0, 10, "Rg4")
+    row = 1
+    for i in range(0, len(index), 2):
+        print("*************************************************************************************")
+        print("Ra: ", i, "Rg: ", i + 1)
+        print("IndexRa: ",index[i]+2, " Ra1", S1[index[i]], "\nIndex Rg: ", index[(i+1)]+2," Rg1",  S1[index[i+1]])
+        worksheet_index.write(row, 0, row)
+        worksheet_index.write(row, 1, index[i]+2)
+        worksheet_index.write(row, 2, index[(i+1)]+2)
+
+        worksheet_index.write(row, 3,  S1[index[i]])
+        worksheet_index.write(row, 4,  S1[index[i+1]])
+
+        worksheet_index.write(row, 5, S2[index[i]])
+        worksheet_index.write(row, 6, S2[index[i+1]])
+
+        worksheet_index.write(row, 7, S3[index[i]])
+        worksheet_index.write(row, 8, S3[index[i+1]])
+
+        worksheet_index.write(row, 9,  S4[index[i]])
+        worksheet_index.write(row, 10, S4[index[i+1]])
+        row+=1
+        print("*************************************************************************************")
+
+    # for i in range(len(index)):
+    #     print("Fila: ", i+1, "Col ", 0, "Dato ", index[i]+2)
+    #     print("S1", S1[index[i]],"on raw ",index[i]+2)
+    #
+    #     worksheet_index.write(i+1, 0, index[i]+2)
+    #     worksheet_index.write(i+1, 1, S1[index[i]])
+    #     worksheet_index.write(i+1, 0, index[i] + 2)
+    # CAMBIO HASTA AQUÍ
 
     workbook.close()
+
 
 class File():
     """
@@ -296,6 +357,7 @@ class File():
                      name_main_variables[12]: voltages[2],
                      name_main_variables[13]: voltages[3],
                      }
+
             data = pd.DataFrame(Data, columns=['Id', 'Tiempo_minutos', 'Tiempo_segundos',
                                                 'S1', 'S2', 'S3', 'S4',
                                                 name_main_variables[4], name_main_variables[5],
